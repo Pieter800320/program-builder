@@ -25,7 +25,6 @@ export default function App() {
   function handleGenerate() {
     if (!client) return
     const split = generateSplit(client)
-    // Pre-fill sets/reps from phase defaults
     const initialised = split.map(day => ({
       ...day,
       phases: day.phases.map(ph => ({
@@ -37,10 +36,13 @@ export default function App() {
         })),
       })),
     }))
-    setProgram(initialised)
+    // Always fully reset so switching clients works correctly
+    setProgram(null)
     setActiveDay(0)
     setWeek(1)
+    setAdaptation('normal')
     setQualityReport(null)
+    setTimeout(() => setProgram(initialised), 0)
   }
 
   // ── Update a day in the program ──────────────────────────────────────────
