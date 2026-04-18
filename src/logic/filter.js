@@ -20,11 +20,14 @@ export function filterExercises(allExercises, { phase, patterns = [], client }) 
     if (patterns.length > 0 && !patterns.some(p => ex.patterns.includes(p))) return false
 
     // 3. Equipment: at least one piece available
-    if (!ex.equipment.some(eq => available.has(eq))) return false
+    // If client has no equipment mapped, skip this filter (show everything)
+    if (available.size > 0 && !ex.equipment.some(eq => available.has(eq))) return false
 
     // 4. Skill ceiling: no skill above client level
+    // If client experience not mapped, treat as beginner
+    const clientSkill = SKILL_RANK[client.experience] ?? 0
     const maxSkill = Math.max(...ex.skill_level.map(s => SKILL_RANK[s] ?? 0))
-    if (maxSkill > clientSkillRank) return false
+    if (maxSkill > clientSkill) return false
 
     // 5. Contraindications: none triggered
     if (ex.contraindications.some(c => injuries.has(c))) return false
