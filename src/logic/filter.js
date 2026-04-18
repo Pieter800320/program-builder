@@ -6,7 +6,8 @@ const SKILL_RANK = { beginner: 0, intermediate: 1, advanced: 2 }
  */
 export function filterExercises(allExercises, { phase, patterns = [], client }) {
   const clientSkillRank = SKILL_RANK[client.experience] ?? 0
-  const available = new Set(client.equipment_available || [])
+  // Extend with new equipment tags
+const available = new Set(client.equipment_available || [])
   const injuries = new Set([
     ...(client.injuries || []),
     ...(client.medical_flags || []),

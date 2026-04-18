@@ -11003,5 +11003,4592 @@
     "unilateral": true,
     "regression": [],
     "progression": []
+  },
+  {
+    "name": "Pause Back Squat",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "knee_pain"
+    ],
+    "goals": [
+      "strength"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "lower_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "box_squat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Pin Squat",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "knee_pain"
+    ],
+    "goals": [
+      "strength"
+    ],
+    "tags": [
+      "quads",
+      "glutes"
+    ],
+    "unilateral": false,
+    "regression": [
+      "box_squat"
+    ],
+    "progression": [
+      "back_squat"
+    ]
+  },
+  {
+    "name": "Anderson Squat",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "knee_pain"
+    ],
+    "goals": [
+      "strength"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "lower_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "pin_squat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Front-Foot Elevated Split Squat",
+    "patterns": [
+      "lunge"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "dumbbell",
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load",
+      "hip_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "hypertrophy",
+      "strength"
+    ],
+    "tags": [
+      "quads",
+      "glutes"
+    ],
+    "unilateral": true,
+    "regression": [
+      "split_squat_dumbbell"
+    ],
+    "progression": [
+      "bulgarian_split_squat_barbell"
+    ]
+  },
+  {
+    "name": "Paused Bench Press",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "elbow_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "elbow_pain"
+    ],
+    "goals": [
+      "strength"
+    ],
+    "tags": [
+      "chest",
+      "triceps"
+    ],
+    "unilateral": false,
+    "regression": [
+      "barbell_bench_press_flat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Wide-Grip Bench Press",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load"
+    ],
+    "contraindications": [
+      "shoulder_pain"
+    ],
+    "goals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "tags": [
+      "chest"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dumbbell_bench_press_flat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Decline Bench Press (Barbell)",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "elbow_load"
+    ],
+    "contraindications": [
+      "elbow_pain"
+    ],
+    "goals": [
+      "hypertrophy",
+      "strength"
+    ],
+    "tags": [
+      "chest",
+      "triceps"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dumbbell_bench_press_flat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Pendlay Row",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "avoid_spinal_flexion"
+    ],
+    "goals": [
+      "strength"
+    ],
+    "tags": [
+      "upper_back",
+      "lats",
+      "lower_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "barbell_row_overhand"
+    ],
+    "progression": []
+  },
+  {
+    "name": "T-Bar Row",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell",
+      "landmine"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load",
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "low_back_pain"
+    ],
+    "goals": [
+      "hypertrophy",
+      "strength"
+    ],
+    "tags": [
+      "upper_back",
+      "lats"
+    ],
+    "unilateral": false,
+    "regression": [
+      "chest_supported_dumbbell_row"
+    ],
+    "progression": [
+      "barbell_row_overhand"
+    ]
+  },
+  {
+    "name": "Seal Row",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "hypertrophy",
+      "strength"
+    ],
+    "tags": [
+      "upper_back",
+      "lats",
+      "rear_delts"
+    ],
+    "unilateral": false,
+    "regression": [
+      "chest_supported_dumbbell_row"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Chest-Supported Barbell Row",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "tags": [
+      "upper_back",
+      "lats"
+    ],
+    "unilateral": false,
+    "regression": [
+      "chest_supported_dumbbell_row"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Block Pull (Deadlift)",
+    "patterns": [
+      "hinge"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain"
+    ],
+    "goals": [
+      "strength"
+    ],
+    "tags": [
+      "posterior_chain",
+      "lower_back",
+      "upper_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "rack_pull_above_knee"
+    ],
+    "progression": [
+      "conventional_deadlift"
+    ]
+  },
+  {
+    "name": "Weighted Pull-Up",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "pull_up_bar",
+      "band"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "elbow_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "elbow_pain"
+    ],
+    "goals": [
+      "strength"
+    ],
+    "tags": [
+      "lats",
+      "biceps",
+      "upper_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "pull_up"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Weighted Chin-Up",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "pull_up_bar",
+      "band"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "elbow_load"
+    ],
+    "contraindications": [
+      "elbow_pain"
+    ],
+    "goals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "tags": [
+      "lats",
+      "biceps"
+    ],
+    "unilateral": false,
+    "regression": [
+      "chin_up"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Weighted Plank",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell",
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "wrist_pain",
+      "shoulder_pain"
+    ],
+    "goals": [
+      "strength",
+      "stability"
+    ],
+    "tags": [
+      "core"
+    ],
+    "unilateral": false,
+    "regression": [
+      "rkc_plank"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Side Plank (Weighted)",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "dumbbell",
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "shoulder_pain"
+    ],
+    "goals": [
+      "strength",
+      "stability"
+    ],
+    "tags": [
+      "core",
+      "abductors"
+    ],
+    "unilateral": true,
+    "regression": [
+      "side_plank"
+    ],
+    "progression": [
+      "copenhagen_plank"
+    ]
+  },
+  {
+    "name": "Zercher Carry",
+    "patterns": [
+      "carry",
+      "core"
+    ],
+    "phases": [
+      "accessory",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "elbow_load",
+      "spine_load"
+    ],
+    "contraindications": [
+      "elbow_pain",
+      "low_back_pain"
+    ],
+    "goals": [
+      "strength",
+      "stability"
+    ],
+    "tags": [
+      "core",
+      "upper_back",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "farmers_carry_dumbbell"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Reverse Hyperextension (Weighted)",
+    "patterns": [
+      "hinge"
+    ],
+    "phases": [
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "back_extension_bench",
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "hypertrophy",
+      "strength",
+      "health"
+    ],
+    "tags": [
+      "glutes",
+      "hamstrings",
+      "lower_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "reverse_hyperextension"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Landmine Squat",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "landmine"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "hypertrophy",
+      "strength"
+    ],
+    "tags": [
+      "quads",
+      "glutes"
+    ],
+    "unilateral": false,
+    "regression": [
+      "goblet_squat_dumbbell"
+    ],
+    "progression": [
+      "back_squat"
+    ]
+  },
+  {
+    "name": "Hang Power Clean",
+    "patterns": [
+      "explosive",
+      "hinge"
+    ],
+    "phases": [
+      "kpi",
+      "activation"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "posterior_chain",
+      "full_body",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "kettlebell_clean"
+    ],
+    "progression": [
+      "power_clean_from_floor"
+    ]
+  },
+  {
+    "name": "Power Clean from Floor",
+    "patterns": [
+      "explosive",
+      "hinge"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load",
+      "shoulder_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "posterior_chain",
+      "full_body",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "hang_power_clean"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Hang Power Snatch",
+    "patterns": [
+      "explosive",
+      "hinge"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "wrist_pain",
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power"
+    ],
+    "tags": [
+      "posterior_chain",
+      "full_body",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "hang_power_clean"
+    ],
+    "progression": [
+      "power_snatch_from_floor"
+    ]
+  },
+  {
+    "name": "Power Snatch from Floor",
+    "patterns": [
+      "explosive",
+      "hinge"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "shoulder_load",
+      "spine_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "low_back_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power"
+    ],
+    "tags": [
+      "posterior_chain",
+      "full_body",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "hang_power_snatch"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Clean Pull",
+    "patterns": [
+      "explosive",
+      "pull"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "posterior_chain",
+      "upper_back",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "hang_power_clean"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Push Press (Barbell)",
+    "patterns": [
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_load",
+      "spine_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "avoid_overhead",
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "shoulders",
+      "triceps",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dumbbell_overhead_press_standing"
+    ],
+    "progression": [
+      "barbell_overhead_press"
+    ]
+  },
+  {
+    "name": "Split Jerk",
+    "patterns": [
+      "push",
+      "explosive",
+      "lunge"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "shoulder_load",
+      "spine_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "avoid_overhead",
+      "knee_pain",
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "shoulders",
+      "full_body",
+      "quads"
+    ],
+    "unilateral": true,
+    "regression": [
+      "push_press_barbell"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Dumbbell Jump Squat",
+    "patterns": [
+      "squat",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "jump_squat"
+    ],
+    "progression": [
+      "box_jump"
+    ]
+  },
+  {
+    "name": "Countermovement Jump",
+    "patterns": [
+      "explosive",
+      "squat"
+    ],
+    "phases": [
+      "activation",
+      "kpi"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "bodyweight_squat"
+    ],
+    "progression": [
+      "box_jump"
+    ]
+  },
+  {
+    "name": "Depth Jump",
+    "patterns": [
+      "explosive",
+      "squat"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "box_jump"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Lateral Bound",
+    "patterns": [
+      "explosive",
+      "locomotion"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "glutes",
+      "quads",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "broad_jump"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Skater Jump",
+    "patterns": [
+      "explosive",
+      "locomotion"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "glutes",
+      "quads",
+      "balance",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "lateral_bound"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Split Squat Jump",
+    "patterns": [
+      "lunge",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "jump_squat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Tuck Jump",
+    "patterns": [
+      "explosive",
+      "squat"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "full_body",
+      "quads"
+    ],
+    "unilateral": false,
+    "regression": [
+      "jump_squat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Rebound Box Jump",
+    "patterns": [
+      "explosive",
+      "squat"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "box_jump"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Pogo Jump",
+    "patterns": [
+      "explosive",
+      "locomotion"
+    ],
+    "phases": [
+      "activation",
+      "kpi"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "explosive_power",
+      "health",
+      "mobility"
+    ],
+    "tags": [
+      "calves",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "depth_jump"
+    ]
+  },
+  {
+    "name": "Plyometric Push-Up",
+    "patterns": [
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "chest",
+      "triceps",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "push_up"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Drop Push-Up",
+    "patterns": [
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "chest",
+      "triceps"
+    ],
+    "unilateral": false,
+    "regression": [
+      "plyometric_push_up"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Barbell Thruster",
+    "patterns": [
+      "squat",
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "shoulder_load",
+      "spine_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "avoid_overhead",
+      "shoulder_pain",
+      "low_back_pain"
+    ],
+    "goals": [
+      "conditioning",
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "full_body",
+      "quads",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "kettlebell_goblet_squat_thruster"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Dumbbell Thruster",
+    "patterns": [
+      "squat",
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "avoid_overhead",
+      "shoulder_pain"
+    ],
+    "goals": [
+      "conditioning",
+      "explosive_power"
+    ],
+    "tags": [
+      "full_body",
+      "quads",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "goblet_squat_kettlebell"
+    ],
+    "progression": [
+      "barbell_thruster"
+    ]
+  },
+  {
+    "name": "Landmine Push Press",
+    "patterns": [
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "landmine"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "shoulders",
+      "triceps",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "landmine_shoulder_press"
+    ],
+    "progression": [
+      "push_press_barbell"
+    ]
+  },
+  {
+    "name": "Landmine Clean",
+    "patterns": [
+      "explosive",
+      "hinge"
+    ],
+    "phases": [
+      "kpi",
+      "activation"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "landmine"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "posterior_chain",
+      "shoulders",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "kettlebell_clean"
+    ],
+    "progression": [
+      "hang_power_clean"
+    ]
+  },
+  {
+    "name": "Speed Deadlift",
+    "patterns": [
+      "hinge",
+      "explosive"
+    ],
+    "phases": [
+      "kpi"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "high",
+    "joint_stress": [
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "posterior_chain",
+      "lower_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "conventional_deadlift"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Speed Goblet Squat",
+    "patterns": [
+      "squat",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "primer"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "kettlebell",
+      "dumbbell"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "explosive_power"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "patterning"
+    ],
+    "unilateral": false,
+    "regression": [
+      "goblet_squat_dumbbell"
+    ],
+    "progression": [
+      "dumbbell_jump_squat"
+    ]
+  },
+  {
+    "name": "Cable High Pull",
+    "patterns": [
+      "pull",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "cable"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "explosive_power",
+      "hypertrophy"
+    ],
+    "tags": [
+      "upper_back",
+      "shoulders",
+      "posterior_chain"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dumbbell_high_pull"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Dumbbell High Pull",
+    "patterns": [
+      "pull",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "shoulder_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "hypertrophy"
+    ],
+    "tags": [
+      "upper_back",
+      "shoulders",
+      "posterior_chain"
+    ],
+    "unilateral": false,
+    "regression": [
+      "kettlebell_swing_two_hand"
+    ],
+    "progression": [
+      "cable_high_pull"
+    ]
+  },
+  {
+    "name": "Sissy Squat",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "accessory",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain",
+      "avoid_deep_knee_flexion"
+    ],
+    "goals": [
+      "hypertrophy"
+    ],
+    "tags": [
+      "quads"
+    ],
+    "unilateral": false,
+    "regression": [
+      "leg_extension_machine"
+    ],
+    "progression": []
+  },
+  {
+    "name": "EZ-Bar Curl",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "barbell"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "elbow_load"
+    ],
+    "contraindications": [
+      "elbow_pain"
+    ],
+    "goals": [
+      "hypertrophy"
+    ],
+    "tags": [
+      "biceps"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dumbbell_bicep_curl"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Incline Dumbbell Curl",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "dumbbell"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "elbow_load",
+      "shoulder_load"
+    ],
+    "contraindications": [
+      "elbow_pain",
+      "shoulder_pain"
+    ],
+    "goals": [
+      "hypertrophy"
+    ],
+    "tags": [
+      "biceps"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dumbbell_bicep_curl"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Overhead Cable Triceps Extension",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "cable"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "elbow_load",
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "elbow_pain"
+    ],
+    "goals": [
+      "hypertrophy"
+    ],
+    "tags": [
+      "triceps"
+    ],
+    "unilateral": false,
+    "regression": [
+      "cable_tricep_pushdown_rope"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Leg Press Calf Raise",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "leg_press_machine"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "hypertrophy"
+    ],
+    "tags": [
+      "calves"
+    ],
+    "unilateral": false,
+    "regression": [
+      "calf_raise_standing_machine"
+    ],
+    "progression": []
+  },
+  {
+    "name": "American Kettlebell Swing",
+    "patterns": [
+      "hinge",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "kettlebell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_load",
+      "spine_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "low_back_pain",
+      "avoid_overhead"
+    ],
+    "goals": [
+      "hypertrophy",
+      "conditioning",
+      "explosive_power"
+    ],
+    "tags": [
+      "glutes",
+      "hamstrings",
+      "shoulders",
+      "posterior_chain"
+    ],
+    "unilateral": false,
+    "regression": [
+      "kettlebell_swing_two_hand"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Dumbbell Snatch (Alternating)",
+    "patterns": [
+      "hinge",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "low_back_pain",
+      "avoid_overhead"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "posterior_chain",
+      "shoulders",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "kettlebell_swing_two_hand"
+    ],
+    "progression": [
+      "kettlebell_snatch"
+    ]
+  },
+  {
+    "name": "Dumbbell Clean",
+    "patterns": [
+      "hinge",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "posterior_chain",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "kettlebell_clean"
+    ],
+    "progression": [
+      "hang_power_clean"
+    ]
+  },
+  {
+    "name": "Wall Ball",
+    "patterns": [
+      "squat",
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "medicine_ball"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_friendly",
+      "knee_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "knee_pain"
+    ],
+    "goals": [
+      "conditioning",
+      "explosive_power"
+    ],
+    "tags": [
+      "full_body",
+      "quads",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "goblet_squat_dumbbell"
+    ],
+    "progression": [
+      "barbell_thruster"
+    ]
+  },
+  {
+    "name": "Battle Ropes (Alternating)",
+    "patterns": [
+      "conditioning"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "battle_ropes"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "shoulder_pain"
+    ],
+    "goals": [
+      "conditioning",
+      "fat_loss"
+    ],
+    "tags": [
+      "shoulders",
+      "upper_back",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "battle_ropes_slams"
+    ]
+  },
+  {
+    "name": "Battle Ropes (Slams)",
+    "patterns": [
+      "conditioning",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "finisher"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "battle_ropes"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_friendly",
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "shoulder_pain"
+    ],
+    "goals": [
+      "conditioning",
+      "fat_loss",
+      "explosive_power"
+    ],
+    "tags": [
+      "full_body",
+      "shoulders",
+      "core"
+    ],
+    "unilateral": false,
+    "regression": [
+      "battle_ropes_alternating"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Mountain Climbers",
+    "patterns": [
+      "conditioning",
+      "core"
+    ],
+    "phases": [
+      "activation",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "wrist_load",
+      "knee_friendly"
+    ],
+    "contraindications": [
+      "wrist_pain"
+    ],
+    "goals": [
+      "conditioning",
+      "fat_loss",
+      "stability"
+    ],
+    "tags": [
+      "core",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "bear_crawl"
+    ],
+    "progression": []
+  },
+  {
+    "name": "High Knees",
+    "patterns": [
+      "conditioning",
+      "locomotion"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "finisher"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "conditioning",
+      "health",
+      "mobility"
+    ],
+    "tags": [
+      "full_body",
+      "core"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Backward Sled Drag",
+    "patterns": [
+      "conditioning",
+      "locomotion"
+    ],
+    "phases": [
+      "finisher",
+      "kpi"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "sled"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "conditioning",
+      "health",
+      "fat_loss"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "sled_push"
+    ]
+  },
+  {
+    "name": "Sled March",
+    "patterns": [
+      "conditioning",
+      "locomotion"
+    ],
+    "phases": [
+      "finisher",
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "sled"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "conditioning",
+      "health",
+      "stability"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "sled_push"
+    ]
+  },
+  {
+    "name": "Shadow Boxing",
+    "patterns": [
+      "conditioning",
+      "locomotion"
+    ],
+    "phases": [
+      "warmup",
+      "finisher"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "conditioning",
+      "fat_loss",
+      "health"
+    ],
+    "tags": [
+      "shoulders",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Jump Rope Intervals",
+    "patterns": [
+      "conditioning",
+      "locomotion"
+    ],
+    "phases": [
+      "warmup",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate",
+      "high"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "conditioning",
+      "fat_loss"
+    ],
+    "tags": [
+      "full_body",
+      "calves"
+    ],
+    "unilateral": false,
+    "regression": [
+      "high_knees"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Tabata Bike Sprint",
+    "patterns": [
+      "conditioning"
+    ],
+    "phases": [
+      "finisher",
+      "kpi"
+    ],
+    "intensity": [
+      "high"
+    ],
+    "equipment": [
+      "assault_bike"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "conditioning",
+      "fat_loss"
+    ],
+    "tags": [
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "assault_bike_intervals"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Dumbbell Push Press",
+    "patterns": [
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "dumbbell"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "avoid_overhead",
+      "shoulder_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "shoulders",
+      "triceps",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dumbbell_overhead_press_standing"
+    ],
+    "progression": [
+      "push_press_barbell"
+    ]
+  },
+  {
+    "name": "Cossack Squat",
+    "patterns": [
+      "lunge",
+      "squat"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight",
+      "kettlebell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "hip_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "mobility",
+      "stability"
+    ],
+    "tags": [
+      "adductors",
+      "glutes",
+      "quads"
+    ],
+    "unilateral": true,
+    "regression": [
+      "lateral_lunge_bodyweight"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Jefferson Curl",
+    "patterns": [
+      "hinge"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "dumbbell",
+      "barbell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain",
+      "avoid_spinal_flexion"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "unilateral": false,
+    "regression": [
+      "seated_forward_fold"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Hip Airplanes",
+    "patterns": [
+      "core",
+      "rotation"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "hip_load"
+    ],
+    "contraindications": [
+      "balance_deficit"
+    ],
+    "goals": [
+      "mobility",
+      "stability"
+    ],
+    "tags": [
+      "glutes",
+      "balance",
+      "abductors"
+    ],
+    "unilateral": true,
+    "regression": [
+      "hip_cars"
+    ],
+    "progression": [
+      "single_leg_rdl_dumbbell"
+    ]
+  },
+  {
+    "name": "Squat-to-Stand",
+    "patterns": [
+      "squat",
+      "hinge"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "hip_load"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "hamstrings",
+      "quads",
+      "full_body",
+      "patterning"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "worlds_greatest_stretch"
+    ]
+  },
+  {
+    "name": "Prying Goblet Squat",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "primer"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "kettlebell",
+      "dumbbell"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "hip_load"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "adductors",
+      "glutes",
+      "quads",
+      "patterning"
+    ],
+    "unilateral": false,
+    "regression": [
+      "bodyweight_squat"
+    ],
+    "progression": [
+      "goblet_squat_kettlebell"
+    ]
+  },
+  {
+    "name": "Deep Goblet Squat Hold",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "kettlebell",
+      "dumbbell"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load",
+      "hip_load"
+    ],
+    "contraindications": [
+      "avoid_deep_knee_flexion",
+      "knee_pain"
+    ],
+    "goals": [
+      "mobility",
+      "stability"
+    ],
+    "tags": [
+      "quads",
+      "adductors",
+      "glutes"
+    ],
+    "unilateral": false,
+    "regression": [
+      "prying_goblet_squat"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Scapular Push-Up",
+    "patterns": [
+      "push",
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "stability",
+      "health"
+    ],
+    "tags": [
+      "shoulder_health",
+      "upper_back",
+      "core"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "push_up"
+    ]
+  },
+  {
+    "name": "Scapular Pull-Up",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "pull_up_bar"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "stability",
+      "health"
+    ],
+    "tags": [
+      "shoulder_health",
+      "upper_back",
+      "lats"
+    ],
+    "unilateral": false,
+    "regression": [
+      "dead_hang"
+    ],
+    "progression": [
+      "assisted_pull_up"
+    ]
+  },
+  {
+    "name": "Dead Hang",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "pull_up_bar"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "shoulder_pain"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "lats",
+      "shoulder_health",
+      "upper_back"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "scapular_pull_up"
+    ]
+  },
+  {
+    "name": "Banded Shoulder Dislocate",
+    "patterns": [
+      "rotation"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "band"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "shoulder_pain"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "shoulder_health",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [
+      "shoulder_cars"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Turkish Get-Up",
+    "patterns": [
+      "core",
+      "rotation"
+    ],
+    "phases": [
+      "primer",
+      "kpi",
+      "accessory"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "kettlebell",
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "stability",
+      "strength",
+      "mobility"
+    ],
+    "tags": [
+      "full_body",
+      "core",
+      "shoulder_health",
+      "shoulders"
+    ],
+    "unilateral": true,
+    "regression": [
+      "half_turkish_get_up"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Half Turkish Get-Up",
+    "patterns": [
+      "core",
+      "rotation"
+    ],
+    "phases": [
+      "activation",
+      "primer",
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "kettlebell",
+      "dumbbell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "wrist_pain"
+    ],
+    "goals": [
+      "stability",
+      "mobility"
+    ],
+    "tags": [
+      "core",
+      "shoulder_health",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "dead_bug"
+    ],
+    "progression": [
+      "turkish_get_up"
+    ]
+  },
+  {
+    "name": "Kettlebell Windmill",
+    "patterns": [
+      "hinge",
+      "rotation"
+    ],
+    "phases": [
+      "activation",
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "kettlebell"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "hip_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "low_back_pain"
+    ],
+    "goals": [
+      "mobility",
+      "stability"
+    ],
+    "tags": [
+      "core",
+      "shoulders",
+      "hamstrings",
+      "shoulder_health"
+    ],
+    "unilateral": true,
+    "regression": [
+      "half_turkish_get_up"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Open Book",
+    "patterns": [
+      "rotation"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "upper_back",
+      "shoulder_health"
+    ],
+    "unilateral": true,
+    "regression": [
+      "thoracic_rotation_quadruped"
+    ],
+    "progression": [
+      "thread_the_needle"
+    ]
+  },
+  {
+    "name": "Seated Thoracic Extension",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "upper_back",
+      "shoulder_health"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "thoracic_extension_over_foam_roller"
+    ]
+  },
+  {
+    "name": "Bottom-Up Kettlebell Carry",
+    "patterns": [
+      "carry",
+      "core"
+    ],
+    "phases": [
+      "activation",
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "kettlebell"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "stability",
+      "health"
+    ],
+    "tags": [
+      "shoulder_health",
+      "core",
+      "shoulders"
+    ],
+    "unilateral": true,
+    "regression": [
+      "farmers_carry_kettlebell"
+    ],
+    "progression": [
+      "overhead_carry_kettlebell"
+    ]
+  },
+  {
+    "name": "Single-Leg Balance Reach",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "accessory"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "hip_load"
+    ],
+    "contraindications": [
+      "balance_deficit"
+    ],
+    "goals": [
+      "stability",
+      "health",
+      "mobility"
+    ],
+    "tags": [
+      "balance",
+      "glutes",
+      "core"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": [
+      "single_leg_rdl_cable"
+    ]
+  },
+  {
+    "name": "Step-Down (Eccentric)",
+    "patterns": [
+      "lunge"
+    ],
+    "phases": [
+      "activation",
+      "accessory"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "stability",
+      "health",
+      "mobility"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "balance"
+    ],
+    "unilateral": true,
+    "regression": [
+      "step_up_bodyweight"
+    ],
+    "progression": [
+      "reverse_lunge_dumbbell"
+    ]
+  },
+  {
+    "name": "Agility Ladder (Linear)",
+    "patterns": [
+      "locomotion",
+      "conditioning"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "finisher"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "conditioning",
+      "health",
+      "mobility"
+    ],
+    "tags": [
+      "full_body",
+      "balance",
+      "calves"
+    ],
+    "unilateral": false,
+    "regression": [
+      "high_knees"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Agility Ladder (Lateral)",
+    "patterns": [
+      "locomotion",
+      "conditioning"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "finisher"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "hip_load"
+    ],
+    "contraindications": [],
+    "goals": [
+      "conditioning",
+      "health",
+      "mobility"
+    ],
+    "tags": [
+      "full_body",
+      "adductors",
+      "abductors"
+    ],
+    "unilateral": false,
+    "regression": [
+      "lateral_band_walk"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Leopard Crawl",
+    "patterns": [
+      "locomotion",
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "wrist_pain"
+    ],
+    "goals": [
+      "mobility",
+      "stability",
+      "conditioning"
+    ],
+    "tags": [
+      "core",
+      "full_body",
+      "shoulder_health"
+    ],
+    "unilateral": false,
+    "regression": [
+      "bear_crawl"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Crab Walk",
+    "patterns": [
+      "locomotion",
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "finisher"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "mobility",
+      "conditioning",
+      "stability"
+    ],
+    "tags": [
+      "core",
+      "upper_back",
+      "shoulder_health",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [
+      "bear_crawl"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Sit-Through",
+    "patterns": [
+      "rotation",
+      "core",
+      "locomotion"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "wrist_pain"
+    ],
+    "goals": [
+      "mobility",
+      "stability"
+    ],
+    "tags": [
+      "core",
+      "full_body",
+      "shoulder_health"
+    ],
+    "unilateral": false,
+    "regression": [
+      "bear_crawl"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Butt Kicks",
+    "patterns": [
+      "locomotion"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "hamstrings",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "high_knees"
+    ]
+  },
+  {
+    "name": "Arm Circles",
+    "patterns": [
+      "rotation"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "shoulder_health",
+      "shoulders"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "shoulder_cars"
+    ]
+  },
+  {
+    "name": "Toy Soldiers",
+    "patterns": [
+      "locomotion",
+      "hinge"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "hamstrings",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "leg_swing_forward"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Lunge with Thoracic Rotation",
+    "patterns": [
+      "lunge",
+      "rotation"
+    ],
+    "phases": [
+      "warmup",
+      "activation"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "hip_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "full_body",
+      "upper_back",
+      "glutes"
+    ],
+    "unilateral": true,
+    "regression": [
+      "reverse_lunge_bodyweight"
+    ],
+    "progression": [
+      "worlds_greatest_stretch"
+    ]
+  },
+  {
+    "name": "Butterfly Stretch",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "hip_load"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "adductors",
+      "glutes"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "hip_90_90_stretch"
+    ]
+  },
+  {
+    "name": "Child's Pose",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly",
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "lower_back",
+      "upper_back",
+      "glutes"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": [
+      "cat_cow"
+    ]
+  },
+  {
+    "name": "Lying Spinal Twist",
+    "patterns": [
+      "rotation"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "lower_back",
+      "upper_back",
+      "glutes"
+    ],
+    "unilateral": true,
+    "regression": [
+      "cat_cow"
+    ],
+    "progression": [
+      "thoracic_rotation_quadruped"
+    ]
+  },
+  {
+    "name": "Seated Forward Fold",
+    "patterns": [
+      "hinge"
+    ],
+    "phases": [
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [
+      "avoid_spinal_flexion"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "hamstrings",
+      "lower_back"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Standing Hamstring Stretch",
+    "patterns": [
+      "hinge"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "hamstrings"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": [
+      "seated_forward_fold"
+    ]
+  },
+  {
+    "name": "Standing Calf Stretch",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "calves"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Neck Side Stretch",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "shoulder_health"
+    ],
+    "unilateral": true,
+    "regression": [
+      "neck_cars"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Foam Roller Thoracic Extension",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "activation",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "foam_roller"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "upper_back",
+      "shoulder_health"
+    ],
+    "unilateral": false,
+    "regression": [
+      "thoracic_extension_over_foam_roller"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Foam Roller Quad Roll",
+    "patterns": [
+      "squat"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "foam_roller"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "quads"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Foam Roller IT Band",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "foam_roller"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly",
+      "hip_load"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "abductors"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Banded Lat Stretch",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "band",
+      "pull_up_bar"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "lats",
+      "shoulder_health"
+    ],
+    "unilateral": true,
+    "regression": [
+      "kneeling_lat_stretch"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Banded Chest Opener",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "band"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "chest",
+      "shoulder_health"
+    ],
+    "unilateral": false,
+    "regression": [
+      "chest_opener_stretch"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Figure-4 Glute Stretch",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "hip_load",
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "glutes",
+      "adductors"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": [
+      "pigeon_stretch"
+    ]
+  },
+  {
+    "name": "Wall Shoulder Stretch",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "chest",
+      "shoulder_health"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Triceps Overhead Stretch",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly",
+      "elbow_load"
+    ],
+    "contraindications": [
+      "elbow_pain"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "triceps"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Side-Lying Quad Stretch",
+    "patterns": [
+      "lunge"
+    ],
+    "phases": [
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load",
+      "hip_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "quads",
+      "glutes"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": [
+      "couch_stretch"
+    ]
+  },
+  {
+    "name": "Seated Straddle Stretch",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "hip_load"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "adductors",
+      "hamstrings"
+    ],
+    "unilateral": false,
+    "regression": [
+      "butterfly_stretch"
+    ],
+    "progression": []
+  },
+  {
+    "name": "Weighted Hip Flexor Lunge",
+    "patterns": [
+      "lunge"
+    ],
+    "phases": [
+      "activation",
+      "primer"
+    ],
+    "intensity": [
+      "low",
+      "moderate"
+    ],
+    "equipment": [
+      "dumbbell",
+      "kettlebell"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load",
+      "hip_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "mobility",
+      "stability"
+    ],
+    "tags": [
+      "quads",
+      "glutes"
+    ],
+    "unilateral": true,
+    "regression": [
+      "kneeling_hip_flexor_stretch"
+    ],
+    "progression": [
+      "couch_stretch"
+    ]
+  },
+  {
+    "name": "Banded Hamstring Stretch",
+    "patterns": [
+      "hinge"
+    ],
+    "phases": [
+      "warmup",
+      "cooldown"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "equipment": [
+      "band"
+    ],
+    "skill_level": [
+      "beginner"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "mobility",
+      "health"
+    ],
+    "tags": [
+      "hamstrings"
+    ],
+    "unilateral": true,
+    "regression": [
+      "standing_hamstring_stretch"
+    ],
+    "progression": [
+      "seated_forward_fold"
+    ]
+  },
+  {
+    "name": "Offset Farmer's Carry",
+    "patterns": [
+      "carry",
+      "core"
+    ],
+    "phases": [
+      "accessory",
+      "finisher"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "equipment": [
+      "dumbbell",
+      "kettlebell"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "shoulder_friendly",
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain"
+    ],
+    "goals": [
+      "stability",
+      "strength",
+      "conditioning"
+    ],
+    "tags": [
+      "core",
+      "upper_back",
+      "balance",
+      "full_body"
+    ],
+    "unilateral": true,
+    "regression": [
+      "suitcase_carry_single_arm"
+    ],
+    "progression": []
   }
 ]
