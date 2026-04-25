@@ -150,5 +150,78 @@ For regression and progression, use snake_case exercise names.`
     }
   }, [])
 
-  return { generateExerciseNotes, qualityCheck, tagExercise, loading, error }
 }
+
+  /**
+   * Smart fill — AI picks exercises for all phases on all days.
+   * Returns { dayIndex, phaseIndex, exerciseName, notes }[]
+   */
+  const smartFill = useCallback(async (program, client, allExercises) => {
+    setLoading(true)
+    setError(null)
+    try {
+      const systemPrompt = `You are an expert strength coach trained in Dr. John Rusin's pain-free performance methodology.
+Select the most appropriate exercise for each training slot given the client profile and day focus.
+Return ONLY valid JSON — no markdown, no explanation outside the JSON.
+For each slot, pick ONE exercise name (must match exactly from the available list) and ONE short coaching note (max 12 words).`
+
+      // Build a compact representation of the program
+      const slots = []
+      program.forEach((day, di) => {
+        day.phases.forEach((ph, pi) => {
+          if (['warmup','cooldown'].includes(ph.phase)) return
+          const available = allExercises
+            .filter(ex => {
+              if (!ex.phases.includes(ph.phase)) return false
+              if (ph.patterns.length > 0 && !ph.patterns.some(p => ex.patterns.includes(p))) return false
+              const clientEquip = new Set(client.equipment_available || [])
+              if (clientEquip.size > 0 && !ex.equipment.some(e => clientEquip.has(e))) return false
+              const injuries = new Set([...(client.injuries||[]),...(client.medical_flags||[])])
+              if (ex.contraindications.some(c => injuries.has(c))) return false
+              return true
+            })
+            .slice(0, 20)
+            .map(e => e.name)
+
+          if (available.length === 0) return
+
+          slots.push({
+            id: `${di}_${pi}`,
+            day: day.title,
+            phase: ph.phase,
+            patterns: ph.patterns,
+            available,
+          })
+        })
+      })
+
+      const prompt = `Client profile:
+- Name: ${client.name}
+- Experience: ${client.experience}
+- Goals: ${(client.goals||[]).join(', ')}
+- Injuries: ${[...(client.injuries||[]),...(client.medical_flags||[])].join(', ')||'none'}
+- Specific goal: ${client.specific_goals||'none'}
+
+Training slots to fill:
+${JSON.stringify(slots, null, 2)}
+
+Return a JSON array. Each item must have:
+- "id": the slot id (e.g. "0_2")
+- "exerciseName": exact name from the available list
+- "notes": one short coaching cue (max 12 words)
+
+Example: [{"id":"0_2","exerciseName":"Goblet Squat (Dumbbell)","notes":"Keep chest tall, knees tracking toes"}]`
+
+      const text = await callClaude(prompt, systemPrompt)
+      const clean = text.replace(/```json|```/g, '').trim()
+      const picks = JSON.parse(clean)
+      return picks
+    } catch (e) {
+      setError(e.message)
+      return []
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  return { generateExerciseNotes, qualityCheck, tagExercise, smartFill, loading, error }

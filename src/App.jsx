@@ -71,7 +71,7 @@ export default function App() {
     latestClientRef.current = c
   }
 
-  const { generateExerciseNotes, qualityCheck, aiLoading, error: aiError } = useAI()
+  const { generateExerciseNotes, qualityCheck, smartFill, aiLoading, error: aiError } = useAI()
 
   // ── Generate split ────────────────────────────────────────────────────────
   function handleGenerate(clientOverride) {
@@ -151,6 +151,50 @@ export default function App() {
     setQualityReport(report)
   }
 
+  async function handleSmartFill() {
+    if (!program || !client) return
+    const picks = await smartFill(program, client, allExercises)
+    if (!picks || picks.length === 0) return
+
+    setProgram(prev => {
+      const next = prev.map((day, di) => ({
+        ...day,
+        phases: day.phases.map((ph, pi) => {
+          const pick = picks.find(p => p.id === `${di}_${pi}`)
+          if (!pick) return ph
+          // Fill first empty slot, or add new one
+          const exercises = [...ph.exercises]
+          const emptyIdx = exercises.findIndex(ex => !ex.exerciseName)
+          const filled = {
+            ...(emptyIdx >= 0 ? exercises[emptyIdx] : { id: crypto.randomUUID(), sets: '', reps: '', showNotes: false }),
+            exerciseName: pick.exerciseName,
+            notes: pick.notes || '',
+            sets: exercises[emptyIdx]?.sets || '',
+            reps: exercises[emptyIdx]?.reps || '',
+          }
+          if (emptyIdx >= 0) {
+            exercises[emptyIdx] = filled
+          } else {
+            exercises.push(filled)
+          }
+          return { ...ph, exercises }
+        }),
+      }))
+      return next
+    })
+  }
+
+  function handleDeleteProgram() {
+    if (!client) return
+    const confirm = window.confirm(`Delete saved program for ${client.name}? This cannot be undone.`)
+    if (!confirm) return
+    const key = `pb_program_${client.name.replace(/\s+/g, '_')}`
+    localStorage.removeItem(key)
+    setProgram(null)
+    setActiveDay(0)
+    setWeek(1)
+  }
+
   function handleAddExerciseSave(newExercise) {
     setAllExercises(prev => {
       const filtered = prev.filter(e => e.name.toLowerCase() !== newExercise.name.toLowerCase())
@@ -195,10 +239,26 @@ export default function App() {
             )}
             <button
               className="btn btn-ghost btn-sm"
+              onClick={handleSmartFill}
+              disabled={aiLoading}
+              title="AI fills all exercises"
+            >
+              {aiLoading ? <span className="loader" /> : '⚡ Smart fill'}
+            </button>
+            <button
+              className="btn btn-ghost btn-sm"
               onClick={handleQualityCheck}
               disabled={aiLoading}
             >
               {aiLoading ? <span className="loader" /> : '✦ Quality check'}
+            </button>
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={handleDeleteProgram}
+              title="Delete saved program"
+              style={{ color: 'var(--danger)' }}
+            >
+              🗑
             </button>
             <ExportButton client={client} program={displayProgram || program} week={week} />
           </>
