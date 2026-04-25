@@ -154,6 +154,7 @@ export default function App() {
   async function handleSmartFill() {
     if (!program || !client) return
     const picks = await smartFill(program, client, allExercises)
+    console.log('Smart fill picks:', JSON.stringify(picks, null, 2))
     if (!picks || picks.length === 0) return
 
     setProgram(prev => {
