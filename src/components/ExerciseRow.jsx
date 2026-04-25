@@ -13,6 +13,8 @@ export default function ExerciseRow({
   aiLoading,
 }) {
   const [showNotes, setShowNotes] = useState(exercise.showNotes || false)
+  const [showDropdown, setShowDropdown] = useState(false)
+  const [search, setSearch] = useState(exercise.exerciseName || '')
 
   const options = filterExercises(allExercises, {
     phase,
@@ -20,16 +22,26 @@ export default function ExerciseRow({
     client,
   })
 
-  // Always include current selection even if it no longer passes filter
-  const inOptions = options.some(o => o.name === exercise.exerciseName)
-  const allOptions = inOptions
-    ? options
-    : exercise.exerciseName
-      ? [{ name: exercise.exerciseName, _score: 0 }, ...options]
-      : options
+  // Filter by search text
+  const filtered = search
+    ? options.filter(o => o.name.toLowerCase().includes(search.toLowerCase()))
+    : options
 
   function handleField(field, value) {
     onUpdate({ ...exercise, [field]: value })
+  }
+
+  function handleSelect(name) {
+    setSearch(name)
+    setShowDropdown(false)
+    onUpdate({ ...exercise, exerciseName: name })
+  }
+
+  function handleSearchChange(e) {
+    const val = e.target.value
+    setSearch(val)
+    onUpdate({ ...exercise, exerciseName: val })
+    setShowDropdown(true)
   }
 
   async function handleGenerateNotes() {
@@ -42,18 +54,38 @@ export default function ExerciseRow({
   return (
     <div>
       <div className="exercise-row">
-        {/* Exercise dropdown */}
-        <select
-          value={exercise.exerciseName}
-          onChange={e => handleField('exerciseName', e.target.value)}
-        >
-          <option value="">— select exercise —</option>
-          {allOptions.map(ex => (
-            <option key={ex.name} value={ex.name}>{ex.name}</option>
-          ))}
-        </select>
+        {/* Editable exercise name with dropdown */}
+        <div className="exercise-name-wrap" style={{ position: 'relative' }}>
+          <input
+            type="text"
+            placeholder="type or select exercise…"
+            value={search}
+            onChange={handleSearchChange}
+            onFocus={() => setShowDropdown(true)}
+            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+            style={{ fontSize: 13 }}
+          />
+          {showDropdown && filtered.length > 0 && (
+            <div className="exercise-dropdown">
+              {filtered.slice(0, 12).map(ex => (
+                <div
+                  key={ex.name}
+                  className="exercise-dropdown-item"
+                  onMouseDown={() => handleSelect(ex.name)}
+                >
+                  {ex.name}
+                </div>
+              ))}
+              {filtered.length > 12 && (
+                <div className="exercise-dropdown-more">
+                  +{filtered.length - 12} more — keep typing to filter
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
-        {/* Sets + Reps wrapped for mobile */}
+        {/* Sets + Reps */}
         <div className="exercise-row-meta">
           <input
             type="text"

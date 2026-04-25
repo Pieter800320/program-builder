@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function SettingsModal({ onClose }) {
+export default function SettingsModal({ onClose, onExportCustom, customCount }) {
   const [apiKey, setApiKey] = useState(localStorage.getItem('pb_api_key') || '')
   const [gasUrl, setGasUrl] = useState(localStorage.getItem('pb_gas_url') || '')
   const [saved, setSaved] = useState(false)
@@ -71,6 +71,18 @@ export default function SettingsModal({ onClose }) {
               <li>Copy the URL and paste it above</li>
             </ol>
           </div>
+        </div>
+
+        <div className="settings-section">
+          <h3>Custom exercises</h3>
+          <p className="text-sm text-muted" style={{ marginBottom: 8 }}>
+            {customCount || 0} custom exercise{customCount !== 1 ? 's' : ''} saved in this browser.
+          </p>
+          {customCount > 0 && (
+            <button className="btn btn-secondary btn-sm" onClick={onExportCustom}>
+              ↓ Export custom exercises (.json)
+            </button>
+          )}
         </div>
 
         <div className="modal-footer">
