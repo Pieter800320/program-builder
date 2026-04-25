@@ -10,6 +10,7 @@ import { applyProgression, WEEK_LABELS } from './logic/progression'
 import { useAI } from './hooks/useAI'
 import { useSheets } from './hooks/useSheets'
 import baseExercises from './data/exercises.json'
+import { filterExercises } from './logic/filter.js'
 
 // ── Merge base DB with custom exercises from localStorage ─────────────────────
 function loadAllExercises() {
@@ -174,8 +175,6 @@ export default function App() {
       pickMap[id] = p
     })
 
-    const { filterExercises } = await import('./logic/filter.js')
-
     setProgram(prev => {
       const next = prev.map((day, di) => ({
         ...day,
@@ -218,22 +217,92 @@ export default function App() {
 
           if (firstEx && firstEx.exerciseName) exercises.push(firstEx)
 
-          // Fill remaining slots from filtered list (skip already picked)
-          const usedNames = new Set(exercises.map(e => e.exerciseName))
-          const remaining = filtered.filter(ex => !usedNames.has(ex.name))
+          // For accessory: enforce Rusin superset pairing logic
+          // A1/B1 = primary pattern, A2/B2 = opposing pattern
+          if (ph.phase === 'accessory' && count === 4) {
+            // Opposing pattern map
+            const OPPOSING = {
+              push: ['pull'], pull: ['push'],
+              squat: ['hinge'], hinge: ['squat'],
+              lunge: ['hinge', 'carry'], carry: ['core'],
+              core: ['carry', 'rotation'], rotation: ['core'],
+            }
+            const primaryPatterns = ph.patterns.length > 0 ? ph.patterns : ['push']
+            const opposingPatterns = primaryPatterns.flatMap(p => OPPOSING[p] || ['core'])
 
-          for (let i = 1; i < count && i < remaining.length + 1; i++) {
-            const ex = remaining[i - 1]
-            if (!ex) break
-            exercises.push({
-              id: crypto.randomUUID(),
-              exerciseName: ex.name,
-              sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
-              reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
-              notes: '',
-              showNotes: false,
-              supersetGroup: ph.phase === 'accessory' ? SUPERSET_GROUPS[i] || null : null,
-            })
+            const usedNames = new Set(exercises.map(e => e.exerciseName))
+
+            // A2 — opposing pattern to AI pick
+            const opposingFiltered = filterExercises(allExercises, {
+              phase: ph.phase,
+              patterns: opposingPatterns,
+              client,
+            }).filter(ex => !usedNames.has(ex.name))
+
+            if (opposingFiltered[0]) {
+              exercises.push({
+                id: crypto.randomUUID(),
+                exerciseName: opposingFiltered[0].name,
+                sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
+                reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
+                notes: '', showNotes: false,
+                supersetGroup: 'A2',
+              })
+              usedNames.add(opposingFiltered[0].name)
+            }
+
+            // B1 — second primary pattern exercise
+            const b1Filtered = filterExercises(allExercises, {
+              phase: ph.phase,
+              patterns: primaryPatterns,
+              client,
+            }).filter(ex => !usedNames.has(ex.name))
+
+            if (b1Filtered[0]) {
+              exercises.push({
+                id: crypto.randomUUID(),
+                exerciseName: b1Filtered[0].name,
+                sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
+                reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
+                notes: '', showNotes: false,
+                supersetGroup: 'B1',
+              })
+              usedNames.add(b1Filtered[0].name)
+            }
+
+            // B2 — second opposing pattern exercise
+            const b2Filtered = filterExercises(allExercises, {
+              phase: ph.phase,
+              patterns: opposingPatterns,
+              client,
+            }).filter(ex => !usedNames.has(ex.name))
+
+            if (b2Filtered[0]) {
+              exercises.push({
+                id: crypto.randomUUID(),
+                exerciseName: b2Filtered[0].name,
+                sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
+                reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
+                notes: '', showNotes: false,
+                supersetGroup: 'B2',
+              })
+            }
+          } else {
+            // Non-accessory: fill remaining from filtered list
+            const usedNames = new Set(exercises.map(e => e.exerciseName))
+            const remaining = filtered.filter(ex => !usedNames.has(ex.name))
+
+            for (let i = 1; i < count && i - 1 < remaining.length; i++) {
+              const ex = remaining[i - 1]
+              exercises.push({
+                id: crypto.randomUUID(),
+                exerciseName: ex.name,
+                sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
+                reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
+                notes: '', showNotes: false,
+                supersetGroup: null,
+              })
+            }
           }
 
           if (exercises.length === 0) return ph
