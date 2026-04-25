@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import ClientPanel from './components/ClientPanel'
 import DayBlock from './components/DayBlock'
 import SessionNoteModal from './components/SessionNoteModal'
@@ -25,7 +25,7 @@ export default function App() {
   const { fetchClients, fetchClient } = useSheets()
   const [mobileClients, setMobileClients] = useState([])
   const [mobileSelectedRow, setMobileSelectedRow] = useState('')
-  const [mobileLatestClient, setMobileLatestClient] = useState(null)
+  const latestClientRef = useRef(null)
 
   useEffect(() => {
     fetchClients().then(list => setMobileClients(list))
@@ -37,7 +37,7 @@ export default function App() {
     if (!row) { setClient(null); return }
     const c = await fetchClient(row)
     setClient(c)
-    setMobileLatestClient(c)
+    latestClientRef.current = c
   }
 
   // ── Generate split from client profile ──────────────────────────────────
@@ -170,8 +170,8 @@ export default function App() {
         <button
           className="btn btn-primary"
           style={{ marginTop: 8 }}
-          onClick={() => handleGenerate(mobileLatestClient)}
-          disabled={!mobileLatestClient}
+          onClick={() => handleGenerate(latestClientRef.current)}
+          disabled={!latestClientRef.current}
         >
           Generate Template
         </button>
@@ -183,7 +183,7 @@ export default function App() {
         <aside className={`client-panel${panelOpen ? " open" : ""}`}>
           <ClientPanel
             client={client}
-            onClientChange={setClient}
+            onClientChange={(c) => { setClient(c); latestClientRef.current = c; }}
             onGenerate={handleGenerate}
             panelOpen={panelOpen}
             setPanelOpen={setPanelOpen}
