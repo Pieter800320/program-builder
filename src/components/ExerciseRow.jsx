@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { filterExercises } from '../logic/filter'
 
 const SUPERSET_COLORS = {
@@ -6,6 +6,143 @@ const SUPERSET_COLORS = {
   B1: '#10b981', B2: '#10b981',
 }
 
+// ── Centered exercise picker modal ────────────────────────────────────────────
+function ExercisePicker({ options, onSelect, onClose, supersetGroup }) {
+  const [search, setSearch] = useState('')
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
+  const filtered = search.trim()
+    ? options.filter(o => o.name.toLowerCase().includes(search.toLowerCase()))
+    : options
+
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0,
+        background: 'rgba(0,0,0,.7)',
+        zIndex: 9999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 16,
+      }}
+      onClick={e => e.target === e.currentTarget && onClose()}
+    >
+      <div style={{
+        background: 'var(--bg2)',
+        border: '1px solid var(--border)',
+        borderRadius: 12,
+        width: '100%',
+        maxWidth: 480,
+        maxHeight: '75vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}>
+        {/* Header */}
+        <div style={{
+          padding: '14px 16px',
+          borderBottom: '1px solid var(--border)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          flexShrink: 0,
+        }}>
+          {supersetGroup && (
+            <span style={{
+              background: SUPERSET_COLORS[supersetGroup] || 'var(--accent)',
+              color: '#fff',
+              fontSize: 10,
+              fontWeight: 700,
+              padding: '3px 8px',
+              borderRadius: 4,
+            }}>{supersetGroup}</span>
+          )}
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Search exercises…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{ flex: 1, fontSize: 15, padding: '8px 12px' }}
+          />
+          <button
+            className="btn btn-ghost btn-icon"
+            onClick={onClose}
+            style={{ fontSize: 18, flexShrink: 0 }}
+          >×</button>
+        </div>
+
+        {/* Opposing pattern hint */}
+        {(supersetGroup === 'A2' || supersetGroup === 'B2') && (
+          <div style={{
+            padding: '6px 16px',
+            fontSize: 11,
+            color: SUPERSET_COLORS[supersetGroup],
+            background: 'var(--bg3)',
+            borderBottom: '1px solid var(--border)',
+            flexShrink: 0,
+          }}>
+            ↕ Opposing pattern shown first
+          </div>
+        )}
+
+        {/* Exercise list */}
+        <div style={{ overflowY: 'auto', flex: 1 }}>
+          {filtered.length === 0 ? (
+            <div style={{ padding: 24, textAlign: 'center', color: 'var(--text3)', fontSize: 13 }}>
+              No exercises found — try a different search
+            </div>
+          ) : (
+            filtered.map(ex => (
+              <div
+                key={ex.name}
+                onClick={() => onSelect(ex.name)}
+                style={{
+                  padding: '13px 16px',
+                  fontSize: 14,
+                  color: 'var(--text)',
+                  borderBottom: '1px solid var(--border)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  transition: 'background .1s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--bg3)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+              >
+                <span>{ex.name}</span>
+                <span style={{ fontSize: 10, color: 'var(--text3)', marginLeft: 8, flexShrink: 0 }}>
+                  {ex.patterns.join(' · ')}
+                  {ex.unilateral ? ' · unilateral' : ''}
+                </span>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Count */}
+        <div style={{
+          padding: '8px 16px',
+          fontSize: 11,
+          color: 'var(--text3)',
+          borderTop: '1px solid var(--border)',
+          flexShrink: 0,
+        }}>
+          {filtered.length} exercise{filtered.length !== 1 ? 's' : ''}
+          {search ? ` matching "${search}"` : ''}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Exercise row ──────────────────────────────────────────────────────────────
 export default function ExerciseRow({
   exercise,
   phase,
@@ -18,26 +155,10 @@ export default function ExerciseRow({
   aiLoading,
 }) {
   const [showNotes, setShowNotes] = useState(exercise.showNotes || false)
-  const [search, setSearch] = useState(exercise.exerciseName || '')
-  const [open, setOpen] = useState(false)
-  const [dropdownStyle, setDropdownStyle] = useState({})
-  const dropdownRef = useRef(null)
-  const inputRef = useRef(null)
+  const [showPicker, setShowPicker] = useState(false)
 
-  // Close dropdown on outside click
   useEffect(() => {
-    function handleClick(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
-
-  // Keep search in sync when exercise changes externally (e.g. smart fill)
-  useEffect(() => {
-    setSearch(exercise.exerciseName || '')
+    // Sync exercise name if changed externally (e.g. smart fill)
   }, [exercise.exerciseName])
 
   const options = filterExercises(allExercises, {
@@ -47,49 +168,18 @@ export default function ExerciseRow({
     supersetGroup: exercise.supersetGroup || null,
   })
 
-  // Filter by search text
-  const filtered = search && search !== exercise.exerciseName
-    ? options.filter(o => o.name.toLowerCase().includes(search.toLowerCase()))
-    : options
-
   function handleField(field, value) {
     onUpdate({ ...exercise, [field]: value })
   }
 
   function handleSelect(name) {
-    setSearch(name)
-    setOpen(false)
     onUpdate({ ...exercise, exerciseName: name })
-    inputRef.current?.blur()
+    setShowPicker(false)
   }
 
-  function openDropdown() {
-    if (inputRef.current) {
-      const rect = inputRef.current.getBoundingClientRect()
-      const spaceBelow = window.innerHeight - rect.bottom
-      const showAbove = spaceBelow < 220 && rect.top > 220
-      setDropdownStyle({
-        top: showAbove ? undefined : rect.bottom + 4,
-        bottom: showAbove ? window.innerHeight - rect.top + 4 : undefined,
-        left: rect.left,
-        width: rect.width,
-      })
-    }
-    setOpen(true)
-  }
-
-  function handleSearchChange(e) {
-    const val = e.target.value
-    setSearch(val)
-    onUpdate({ ...exercise, exerciseName: val })
-    openDropdown()
-  }
-
-  function handleClear() {
-    setSearch('')
+  function handleClear(e) {
+    e.stopPropagation()
     onUpdate({ ...exercise, exerciseName: '' })
-    setOpen(true)
-    inputRef.current?.focus()
   }
 
   async function handleGenerateNotes() {
@@ -104,7 +194,7 @@ export default function ExerciseRow({
   return (
     <div>
       <div className="exercise-row">
-        {/* Superset label badge */}
+        {/* Superset badge */}
         {sg && (
           <div style={{
             background: SUPERSET_COLORS[sg] || 'var(--accent)',
@@ -123,72 +213,42 @@ export default function ExerciseRow({
           </div>
         )}
 
-        {/* Searchable exercise input with dropdown */}
-        <div
-          ref={dropdownRef}
-          className="exercise-name-wrap"
-          style={{ position: 'relative', flex: 1 }}
+        {/* Exercise name — tap to open picker */}
+        <button
+          onClick={() => setShowPicker(true)}
+          style={{
+            flex: 1,
+            background: 'var(--bg3)',
+            border: '1px solid var(--border)',
+            borderRadius: 6,
+            padding: '8px 32px 8px 10px',
+            textAlign: 'left',
+            color: exercise.exerciseName ? 'var(--text)' : 'var(--text3)',
+            fontSize: 13,
+            cursor: 'pointer',
+            position: 'relative',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            transition: 'border-color .15s',
+            fontFamily: 'inherit',
+          }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border2)'}
+          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
         >
-          <div style={{ position: 'relative' }}>
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="search or type exercise…"
-              value={search}
-              onChange={handleSearchChange}
-              onFocus={() => openDropdown()}
-              style={{ paddingRight: 28 }}
-            />
-            {search && (
-              <button
-                onMouseDown={e => { e.preventDefault(); handleClear() }}
-                style={{
-                  position: 'absolute', right: 8, top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none', border: 'none',
-                  color: 'var(--text3)', fontSize: 16,
-                  cursor: 'pointer', lineHeight: 1, padding: 0,
-                }}
-              >×</button>
-            )}
-          </div>
-
-          {open && filtered.length > 0 && (
-            <div className="exercise-dropdown" style={dropdownStyle}>
-              {/* Group header if opposing slot */}
-              {(sg === 'A2' || sg === 'B2') && (
-                <div style={{
-                  padding: '6px 12px 4px',
-                  fontSize: 10,
-                  color: SUPERSET_COLORS[sg],
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '.06em',
-                  borderBottom: '1px solid var(--border)',
-                }}>
-                  Opposing pattern shown first
-                </div>
-              )}
-              {filtered.slice(0, 20).map(ex => (
-                <div
-                  key={ex.name}
-                  className="exercise-dropdown-item"
-                  onMouseDown={() => handleSelect(ex.name)}
-                >
-                  <span>{ex.name}</span>
-                  {ex.unilateral && (
-                    <span style={{ fontSize: 9, color: 'var(--text3)', marginLeft: 6 }}>unilateral</span>
-                  )}
-                </div>
-              ))}
-              {filtered.length > 20 && (
-                <div className="exercise-dropdown-more">
-                  +{filtered.length - 20} more — type to search
-                </div>
-              )}
-            </div>
+          {exercise.exerciseName || 'tap to select exercise…'}
+          {exercise.exerciseName && (
+            <span
+              onClick={handleClear}
+              style={{
+                position: 'absolute', right: 8, top: '50%',
+                transform: 'translateY(-50%)',
+                color: 'var(--text3)', fontSize: 16,
+                lineHeight: 1,
+              }}
+            >×</span>
           )}
-        </div>
+        </button>
 
         {/* Sets + Reps */}
         <div className="exercise-row-meta">
@@ -212,24 +272,18 @@ export default function ExerciseRow({
             className="btn btn-ghost btn-icon"
             title="Toggle notes"
             onClick={() => setShowNotes(s => !s)}
-          >
-            {showNotes ? '▲' : '▼'}
-          </button>
+          >{showNotes ? '▲' : '▼'}</button>
           <button
             className="btn btn-ghost btn-icon"
             title="AI coaching cues"
             onClick={handleGenerateNotes}
             disabled={!exercise.exerciseName || aiLoading}
-          >
-            {aiLoading ? <span className="loader" /> : '✦'}
-          </button>
+          >{aiLoading ? <span className="loader" /> : '✦'}</button>
           <button
             className="btn btn-ghost btn-icon"
             title="Remove"
             onClick={onRemove}
-          >
-            ×
-          </button>
+          >×</button>
         </div>
       </div>
 
@@ -242,6 +296,15 @@ export default function ExerciseRow({
             onChange={e => handleField('notes', e.target.value)}
           />
         </div>
+      )}
+
+      {showPicker && (
+        <ExercisePicker
+          options={options}
+          onSelect={handleSelect}
+          onClose={() => setShowPicker(false)}
+          supersetGroup={sg}
+        />
       )}
     </div>
   )
