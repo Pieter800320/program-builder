@@ -25,6 +25,7 @@ export default function App() {
   const { fetchClients, fetchClient } = useSheets()
   const [mobileClients, setMobileClients] = useState([])
   const [mobileSelectedRow, setMobileSelectedRow] = useState('')
+  const [mobileLatestClient, setMobileLatestClient] = useState(null)
 
   useEffect(() => {
     fetchClients().then(list => setMobileClients(list))
@@ -36,12 +37,14 @@ export default function App() {
     if (!row) { setClient(null); return }
     const c = await fetchClient(row)
     setClient(c)
+    setMobileLatestClient(c)
   }
 
   // ── Generate split from client profile ──────────────────────────────────
-  function handleGenerate() {
-    if (!client) return
-    const split = generateSplit(client)
+  function handleGenerate(clientOverride) {
+    const c = clientOverride || client
+    if (!c) return
+    const split = generateSplit(c)
     const initialised = split.map(day => ({
       ...day,
       phases: day.phases.map(ph => ({
@@ -53,7 +56,6 @@ export default function App() {
         })),
       })),
     }))
-    // Always fully reset so switching clients works correctly
     setProgram(null)
     setActiveDay(0)
     setWeek(1)
@@ -168,8 +170,8 @@ export default function App() {
         <button
           className="btn btn-primary"
           style={{ marginTop: 8 }}
-          onClick={handleGenerate}
-          disabled={!client}
+          onClick={() => handleGenerate(mobileLatestClient)}
+          disabled={!mobileLatestClient}
         >
           Generate Template
         </button>
