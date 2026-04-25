@@ -153,45 +153,90 @@ export default function App() {
 
   async function handleSmartFill() {
     if (!program || !client) return
+
+    // How many exercises per phase (Rusin methodology)
+    const PHASE_COUNT = {
+      warmup: 3, activation: 3, primer: 2,
+      kpi: 2, accessory: 4, finisher: 1, cooldown: 2,
+    }
+
+    // Superset groups for accessory
+    const SUPERSET_GROUPS = ['A1', 'A2', 'B1', 'B2']
+
+    // AI picks the BEST exercise for each slot (one per slot)
     const picks = await smartFill(program, client, allExercises)
     if (!picks || picks.length === 0) return
 
-    // picks can be flat array or slot-based array — handle both
-    const isSlotBased = picks.length > 0 && picks[0].exercises !== undefined
+    // Build a map of AI picks by slot id
+    const pickMap = {}
+    picks.forEach(p => {
+      const id = String(p.id || p.slotId || '')
+      pickMap[id] = p
+    })
+
+    const { filterExercises } = await import('./logic/filter.js')
 
     setProgram(prev => {
       const next = prev.map((day, di) => ({
         ...day,
         phases: day.phases.map((ph, pi) => {
           const slotId = String(di) + '_' + String(pi)
+          const count = PHASE_COUNT[ph.phase] || 1
+          const aiPick = pickMap[slotId]
 
-          let exerciseList = []
+          // Get filtered exercises for this slot
+          const filtered = filterExercises(allExercises, {
+            phase: ph.phase,
+            patterns: ph.patterns,
+            client,
+          })
 
-          if (isSlotBased) {
-            // New format: [{id, exercises: [...]}]
-            const slot = picks.find(p => String(p.id) === slotId || String(p.slotId) === slotId)
-            if (!slot) return ph
-            exerciseList = slot.exercises || []
-          } else {
-            // Old flat format: [{id, exerciseName, ...}]
-            exerciseList = picks.filter(p =>
-              String(p.slotId) === slotId ||
-              String(p.id) === slotId
-            )
+          const exercises = []
+
+          // First exercise = AI pick (or top filtered if no AI pick)
+          const firstEx = aiPick
+            ? {
+                id: crypto.randomUUID(),
+                exerciseName: aiPick.exerciseName || aiPick.exercise_name || '',
+                sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
+                reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
+                notes: aiPick.notes || '',
+                showNotes: !!(aiPick.notes),
+                supersetGroup: ph.phase === 'accessory' ? SUPERSET_GROUPS[0] : null,
+              }
+            : filtered.length > 0
+              ? {
+                  id: crypto.randomUUID(),
+                  exerciseName: filtered[0].name,
+                  sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
+                  reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
+                  notes: '',
+                  showNotes: false,
+                  supersetGroup: ph.phase === 'accessory' ? SUPERSET_GROUPS[0] : null,
+                }
+              : null
+
+          if (firstEx && firstEx.exerciseName) exercises.push(firstEx)
+
+          // Fill remaining slots from filtered list (skip already picked)
+          const usedNames = new Set(exercises.map(e => e.exerciseName))
+          const remaining = filtered.filter(ex => !usedNames.has(ex.name))
+
+          for (let i = 1; i < count && i < remaining.length + 1; i++) {
+            const ex = remaining[i - 1]
+            if (!ex) break
+            exercises.push({
+              id: crypto.randomUUID(),
+              exerciseName: ex.name,
+              sets: PHASE_DEFAULTS[ph.phase]?.sets || '',
+              reps: PHASE_DEFAULTS[ph.phase]?.reps || '',
+              notes: '',
+              showNotes: false,
+              supersetGroup: ph.phase === 'accessory' ? SUPERSET_GROUPS[i] || null : null,
+            })
           }
 
-          if (exerciseList.length === 0) return ph
-
-          const exercises = exerciseList.map(pick => ({
-            id: crypto.randomUUID(),
-            exerciseName: pick.exerciseName || '',
-            sets: pick.sets || PHASE_DEFAULTS[ph.phase]?.sets || '',
-            reps: pick.reps || PHASE_DEFAULTS[ph.phase]?.reps || '',
-            notes: pick.notes || '',
-            showNotes: !!(pick.notes),
-            supersetGroup: pick.supersetGroup || null,
-          }))
-
+          if (exercises.length === 0) return ph
           return { ...ph, exercises }
         }),
       }))
