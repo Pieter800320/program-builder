@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import ClientPanel from './components/ClientPanel'
 import DayBlock from './components/DayBlock'
 import SessionNoteModal from './components/SessionNoteModal'
@@ -8,6 +8,7 @@ import { generateSplit, makeEmptyExercise, PHASE_DEFAULTS } from './logic/split'
 import { applyProgression, WEEK_LABELS } from './logic/progression'
 import { useAI } from './hooks/useAI'
 import allExercises from './data/exercises.json'
+import { useSheets } from './hooks/useSheets'
 
 export default function App() {
   const [client, setClient] = useState(null)
@@ -21,6 +22,21 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false)
 
   const { generateExerciseNotes, qualityCheck, aiLoading, error: aiError } = useAI()
+  const { fetchClients, fetchClient } = useSheets()
+  const [mobileClients, setMobileClients] = useState([])
+  const [mobileSelectedRow, setMobileSelectedRow] = useState('')
+
+  useEffect(() => {
+    fetchClients().then(list => setMobileClients(list))
+  }, [])
+
+  async function handleMobileSelect(e) {
+    const row = e.target.value
+    setMobileSelectedRow(row)
+    if (!row) { setClient(null); return }
+    const c = await fetchClient(row)
+    setClient(c)
+  }
 
   // ── Generate split from client profile ──────────────────────────────────
   function handleGenerate() {
@@ -131,6 +147,33 @@ export default function App() {
           ⚙
         </button>
       </header>
+
+      {/* Mobile client bar */}
+      <div className="mobile-client-bar">
+        <select value={mobileSelectedRow} onChange={handleMobileSelect}>
+          <option value="">— select client —</option>
+          {mobileClients.map((c, i) => (
+            <option key={i} value={c._row}>{c.name}</option>
+          ))}
+        </select>
+        {client && (
+          <div className="mobile-client-info">
+            {client.age && <span className="tag">{client.age}y</span>}
+            {client.sex && <span className="tag">{client.sex}</span>}
+            {client.experience && <span className="tag">{client.experience}</span>}
+            {(client.goals || []).map(g => <span key={g} className="tag goal">{g}</span>)}
+            {(client.injuries || []).filter(i => i && i !== 'none').map(i => <span key={i} className="tag injury">{i}</span>)}
+          </div>
+        )}
+        <button
+          className="btn btn-primary"
+          style={{ marginTop: 8 }}
+          onClick={handleGenerate}
+          disabled={!client}
+        >
+          Generate Template
+        </button>
+      </div>
 
       {/* Body */}
       <div className="app-body">
