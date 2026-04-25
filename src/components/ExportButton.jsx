@@ -1,19 +1,27 @@
 import {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   WidthType, BorderStyle, AlignmentType, ShadingType,
-  Header, Footer, PageNumber, NumberFormat,
-  convertInchesToTwip, convertMillimetersToTwip,
+  Header, Footer, PageNumber, TabStopType, TabStopPosition,
+  PageBreak,
 } from 'docx'
 import { saveAs } from 'file-saver'
 import { PHASE_LABELS } from '../logic/split'
 
-const BLACK  = '1A1A1A'
-const GRAY   = '888888'
-const LGRAY  = 'F0F0F0'
-const WHITE  = 'FFFFFF'
-const MGRAY  = 'CCCCCC'
+// ── Constants ─────────────────────────────────────────────────────────────────
+// A4 with 1" margins: content width = 11906 - 2880 = 9026 DXA
+const PAGE_WIDTH   = 11906
+const PAGE_HEIGHT  = 16838
+const MARGIN       = 1440   // 1 inch
+const CONTENT_W    = PAGE_WIDTH - MARGIN * 2   // 9026 DXA
 
-const PHASE_HEX = {
+// Exercise table column widths (must sum to CONTENT_W)
+const COL_EX    = 4513   // 50% — exercise name
+const COL_SETS  = 800    // ~9%
+const COL_REPS  = 800    // ~9%
+const COL_NOTES = 2913   // ~32%
+
+// Phase colours (hex, no #)
+const PHASE_COLOR = {
   warmup:     '0EA5E9',
   activation: '8B5CF6',
   primer:     '6366F1',
@@ -23,105 +31,86 @@ const PHASE_HEX = {
   cooldown:   '64748B',
 }
 
-const PHASE_TIMES = {
-  warmup:     '5–10 min',
-  activation: '5–8 min',
-  primer:     '5–8 min',
-  kpi:        '15–20 min',
-  accessory:  '15–20 min',
-  finisher:   '5–8 min',
-  cooldown:   '5 min',
-}
-
-const pt   = n => n * 2
-const twip = convertInchesToTwip
-const mm   = convertMillimetersToTwip
+// ── Helpers ───────────────────────────────────────────────────────────────────
+// docx size is in half-points: 10pt = 20, 11pt = 22, 12pt = 24
+const hp = pt => pt * 2
 
 function noBorder() {
-  const n = { style: BorderStyle.NONE, size: 0, color: WHITE }
+  const n = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }
   return { top: n, bottom: n, left: n, right: n }
 }
 
-function run(text, opts = {}) {
+function thinBorder(color = 'E2E8F0') {
+  const b = { style: BorderStyle.SINGLE, size: 1, color }
+  return { top: b, bottom: b, left: b, right: b }
+}
+
+function txt(text, opts = {}) {
   return new TextRun({
-    text: text || '',
-    font: 'Arial',
-    size: pt(opts.size || 10),
-    bold: opts.bold || false,
+    text: String(text || ''),
+    font:    'Arial',
+    size:    hp(opts.size || 10),
+    bold:    opts.bold  || false,
     italics: opts.italic || false,
-    color: opts.color || BLACK,
+    color:   opts.color || '1A1A1A',
     characterSpacing: opts.spacing || 0,
   })
 }
 
-function emptyPara(after = 80) {
-  return new Paragraph({ text: '', spacing: { after } })
+function para(children, opts = {}) {
+  return new Paragraph({
+    alignment: opts.align || AlignmentType.LEFT,
+    spacing:   { before: opts.before || 0, after: opts.after || 0 },
+    border:    opts.border || undefined,
+    children:  Array.isArray(children) ? children : [children],
+  })
 }
 
-function buildHeader(client, week) {
+function gap(dxa = 120) {
+  return new Paragraph({ text: '', spacing: { before: 0, after: dxa } })
+}
+
+// ── Header — uses tab stop, no table ─────────────────────────────────────────
+function buildHeader(clientName, week) {
   return new Header({
     children: [
-      new Table({
-        width: { size: 100, type: WidthType.PERCENTAGE },
-        borders: {
-          ...noBorder(),
-          bottom: { style: BorderStyle.SINGLE, size: 6, color: BLACK },
-        },
-        rows: [
-          new TableRow({
-            children: [
-              new TableCell({
-                borders: noBorder(),
-                children: [
-                  new Paragraph({
-                    spacing: { after: 60 },
-                    children: [
-                      run('TRAINING PROGRAM', { size: 12, bold: true, spacing: 80 }),
-                      run(`   ·   Week ${week} of 4`, { size: 9, color: GRAY }),
-                    ],
-                  }),
-                ],
-              }),
-              new TableCell({
-                borders: noBorder(),
-                children: [
-                  new Paragraph({
-                    alignment: AlignmentType.RIGHT,
-                    spacing: { after: 60 },
-                    children: [
-                      run(client?.name || '', { size: 10, bold: true }),
-                      run(`   ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`, { size: 9, color: GRAY }),
-                    ],
-                  }),
-                ],
-              }),
-            ],
-          }),
+      new Paragraph({
+        border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '1A1A1A', space: 4 } },
+        spacing: { after: 0 },
+        tabStops: [{ type: TabStopType.RIGHT, position: CONTENT_W }],
+        children: [
+          txt('TRAINING PROGRAM', { size: 11, bold: true, spacing: 60 }),
+          txt(`   ·   Week ${week} of 4`, { size: 9, color: '888888' }),
+          new TextRun({ text: '\t', font: 'Arial', size: hp(9) }),
+          txt(clientName || '', { size: 10, bold: true }),
+          txt(`   ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`, { size: 9, color: '888888' }),
         ],
       }),
-      emptyPara(120),
+      gap(160),
     ],
   })
 }
 
+// ── Footer ────────────────────────────────────────────────────────────────────
 function buildFooter(week) {
   return new Footer({
     children: [
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        border: { top: { style: BorderStyle.SINGLE, size: 2, color: LGRAY } },
-        spacing: { before: 60 },
+        border: { top: { style: BorderStyle.SINGLE, size: 1, color: 'E2E8F0', space: 4 } },
+        spacing: { before: 80 },
         children: [
-          run(`Week ${week} of 4   ·   `, { size: 8, color: GRAY }),
-          new TextRun({ children: [PageNumber.CURRENT], font: 'Arial', size: pt(8), color: GRAY }),
-          run(' / ', { size: 8, color: GRAY }),
-          new TextRun({ children: [PageNumber.TOTAL_PAGES], font: 'Arial', size: pt(8), color: GRAY }),
+          txt(`Week ${week} of 4   ·   `, { size: 8, color: 'AAAAAA' }),
+          new TextRun({ children: [PageNumber.CURRENT], font: 'Arial', size: hp(8), color: 'AAAAAA' }),
+          txt(' / ', { size: 8, color: 'AAAAAA' }),
+          new TextRun({ children: [PageNumber.TOTAL_PAGES], font: 'Arial', size: hp(8), color: 'AAAAAA' }),
         ],
       }),
     ],
   })
 }
 
+// ── Client info grid ──────────────────────────────────────────────────────────
 function buildClientGrid(client) {
   const injuries = [...(client.injuries || []), ...(client.medical_flags || [])]
     .filter(Boolean).join(', ') || 'None'
@@ -134,176 +123,125 @@ function buildClientGrid(client) {
     ['Session length',  client.session_duration ? `${client.session_duration} min` : '—'],
   ]
 
-  const borderThin = { style: BorderStyle.SINGLE, size: 2, color: LGRAY }
-  const borderNone = { style: BorderStyle.NONE, size: 0, color: WHITE }
+  const cellW = Math.floor(CONTENT_W / 4)
 
-  return [
-    new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      rows: [
-        new TableRow({
-          children: cells.map(([label, value], i) =>
-            new TableCell({
-              borders: {
-                top: borderThin, bottom: borderThin,
-                left: borderThin,
-                right: i === cells.length - 1 ? borderThin : borderNone,
-              },
-              margins: { top: mm(2.5), bottom: mm(2.5), left: mm(3.5), right: mm(3.5) },
-              children: [
-                new Paragraph({
-                  spacing: { after: 30 },
-                  children: [run(label.toUpperCase(), { size: 7.5, color: GRAY, spacing: 60 })],
-                }),
-                new Paragraph({
-                  children: [run(value, { size: 10, bold: true })],
-                }),
-              ],
-            })
-          ),
-        }),
-      ],
-    }),
-    emptyPara(220),
-  ]
-}
-
-function buildDayHeader(day, dayIndex, totalDays) {
-  return [
-    new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      borders: noBorder(),
-      rows: [
-        new TableRow({
-          children: [
-            new TableCell({
-              borders: noBorder(),
-              children: [
-                new Paragraph({
-                  spacing: { after: 30 },
-                  children: [run(`DAY ${dayIndex + 1}`, { size: 8, bold: true, color: GRAY, spacing: 100 })],
-                }),
-                new Paragraph({
-                  spacing: { after: 80 },
-                  children: [run(day.title, { size: 14, bold: true })],
-                }),
-              ],
-            }),
-            new TableCell({
-              borders: noBorder(),
-              children: [
-                new Paragraph({
-                  alignment: AlignmentType.RIGHT,
-                  children: [run(`${dayIndex + 1} / ${totalDays}`, { size: 9, color: GRAY })],
-                }),
-              ],
-            }),
-          ],
-        }),
-      ],
-    }),
-    emptyPara(40),
-  ]
-}
-
-function buildPhaseSection(phaseBlock) {
-  const { phase, exercises } = phaseBlock
-  const filled = exercises.filter(ex => ex.exerciseName)
-  if (!filled.length) return []
-
-  const hex   = PHASE_HEX[phase]    || '888888'
-  const label = PHASE_LABELS[phase] || phase
-  const time  = PHASE_TIMES[phase]  || ''
-  const result = []
-
-  // Phase label with colour accent bar
-  result.push(
-    new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      borders: noBorder(),
-      rows: [
-        new TableRow({
-          children: [
-            new TableCell({
-              width: { size: mm(5), type: WidthType.DXA },
-              borders: noBorder(),
-              shading: { type: ShadingType.SOLID, color: hex },
-              children: [new Paragraph({ text: '' })],
-            }),
-            new TableCell({
-              borders: noBorder(),
-              margins: { left: mm(3) },
-              children: [
-                new Paragraph({
-                  children: [
-                    run(label.toUpperCase(), { size: 8.5, bold: true, color: hex, spacing: 80 }),
-                    run(`   ${time}`, { size: 8.5, color: GRAY }),
-                  ],
-                }),
-              ],
-            }),
-          ],
-        }),
-      ],
-    })
-  )
-  result.push(emptyPara(50))
-
-  // Table header
-  const colWidths = [44, 9, 9, 38]
-  const colLabels = ['Exercise', 'Sets', 'Reps', 'Notes']
-  const headerRow = new TableRow({
-    tableHeader: true,
-    children: colLabels.map((text, i) =>
+  const row = new TableRow({
+    children: cells.map(([label, value], i) =>
       new TableCell({
-        width: { size: colWidths[i], type: WidthType.PERCENTAGE },
-        borders: {
-          top:    { style: BorderStyle.NONE,   size: 0, color: WHITE },
-          bottom: { style: BorderStyle.SINGLE, size: 4, color: MGRAY },
-          left:   { style: BorderStyle.NONE,   size: 0, color: WHITE },
-          right:  { style: BorderStyle.NONE,   size: 0, color: WHITE },
-        },
-        margins: { top: mm(1), bottom: mm(2), left: mm(0), right: mm(2) },
+        width: { size: cellW, type: WidthType.DXA },
+        borders: thinBorder('E2E8F0'),
+        margins: { top: 80, bottom: 80, left: 120, right: 120 },
         children: [
-          new Paragraph({
-            children: [run(text.toUpperCase(), { size: 7.5, color: GRAY, spacing: 50 })],
-          }),
+          para([txt(label.toUpperCase(), { size: 7, color: '999999', spacing: 60 })], { after: 30 }),
+          para([txt(value, { size: 10, bold: true })]),
         ],
       })
     ),
   })
 
+  return [
+    new Table({
+      width: { size: CONTENT_W, type: WidthType.DXA },
+      columnWidths: [cellW, cellW, cellW, cellW],
+      rows: [row],
+    }),
+    gap(240),
+  ]
+}
+
+// ── Day heading ───────────────────────────────────────────────────────────────
+function buildDayHeading(day, dayIndex, totalDays) {
+  return [
+    para(
+      [
+        txt(`DAY ${dayIndex + 1}   `, { size: 8, bold: true, color: '999999', spacing: 100 }),
+        txt(`${dayIndex + 1} / ${totalDays}`, { size: 8, color: 'CCCCCC' }),
+      ],
+      { after: 40 }
+    ),
+    para([txt(day.title, { size: 14, bold: true })], { after: 120 }),
+  ]
+}
+
+// ── Phase section ─────────────────────────────────────────────────────────────
+function buildPhaseSection(phaseBlock) {
+  const { phase, exercises } = phaseBlock
+  const filled = exercises.filter(ex => ex.exerciseName)
+  if (!filled.length) return []
+
+  const color  = PHASE_COLOR[phase] || '888888'
+  const label  = (PHASE_LABELS[phase] || phase).toUpperCase()
+  const result = []
+
+  // Phase label with coloured left border on paragraph
+  result.push(
+    new Paragraph({
+      border: { left: { style: BorderStyle.SINGLE, size: 12, color, space: 8 } },
+      spacing: { before: 0, after: 40 },
+      children: [
+        txt(label, { size: 8, bold: true, color, spacing: 80 }),
+      ],
+    })
+  )
+
+  // Table header row
+  const headerRow = new TableRow({
+    tableHeader: true,
+    children: [
+      ['Exercise', COL_EX],
+      ['Sets', COL_SETS],
+      ['Reps', COL_REPS],
+      ['Notes', COL_NOTES],
+    ].map(([label, w]) =>
+      new TableCell({
+        width: { size: w, type: WidthType.DXA },
+        borders: {
+          top: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+          bottom: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' },
+          left: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+          right: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+        },
+        margins: { top: 40, bottom: 60, left: 0, right: 60 },
+        children: [para([txt(label.toUpperCase(), { size: 7, color: '999999', spacing: 50 })])],
+      })
+    ),
+  })
+
   // Exercise rows
-  const exerciseRows = filled.map((ex, i) => {
+  const exRows = filled.map((ex, i) => {
     const isLast = i === filled.length - 1
     const botBorder = isLast
-      ? { style: BorderStyle.NONE,   size: 0, color: WHITE }
-      : { style: BorderStyle.SINGLE, size: 1, color: LGRAY }
+      ? { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }
+      : { style: BorderStyle.SINGLE, size: 1, color: 'F0F0F0' }
     const cellBorders = {
-      top:    { style: BorderStyle.NONE, size: 0, color: WHITE },
+      top:    { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
       bottom: botBorder,
-      left:   { style: BorderStyle.NONE, size: 0, color: WHITE },
-      right:  { style: BorderStyle.NONE, size: 0, color: WHITE },
+      left:   { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+      right:  { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
     }
-    const cellMargins = { top: mm(2.5), bottom: mm(2.5), left: mm(0), right: mm(2) }
+    const cellMargins = { top: 80, bottom: 80, left: 0, right: 60 }
 
     return new TableRow({
       children: [
         new TableCell({
+          width: { size: COL_EX, type: WidthType.DXA },
           borders: cellBorders, margins: cellMargins,
-          children: [new Paragraph({ children: [run(ex.exerciseName, { size: 10, bold: true })] })],
+          children: [para([txt(ex.exerciseName, { size: 10, bold: true })])],
         }),
         new TableCell({
+          width: { size: COL_SETS, type: WidthType.DXA },
           borders: cellBorders, margins: cellMargins,
-          children: [new Paragraph({ children: [run(ex.sets || '—', { size: 10 })] })],
+          children: [para([txt(ex.sets || '—', { size: 10 })])],
         }),
         new TableCell({
+          width: { size: COL_REPS, type: WidthType.DXA },
           borders: cellBorders, margins: cellMargins,
-          children: [new Paragraph({ children: [run(ex.reps || '—', { size: 10 })] })],
+          children: [para([txt(ex.reps || '—', { size: 10 })])],
         }),
         new TableCell({
+          width: { size: COL_NOTES, type: WidthType.DXA },
           borders: cellBorders, margins: cellMargins,
-          children: [new Paragraph({ children: [run(ex.notes || '', { size: 9, color: GRAY, italic: true })] })],
+          children: [para([txt(ex.notes || '', { size: 9, color: '888888', italic: true })])],
         }),
       ],
     })
@@ -311,14 +249,16 @@ function buildPhaseSection(phaseBlock) {
 
   result.push(
     new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      rows: [headerRow, ...exerciseRows],
+      width: { size: CONTENT_W, type: WidthType.DXA },
+      columnWidths: [COL_EX, COL_SETS, COL_REPS, COL_NOTES],
+      rows: [headerRow, ...exRows],
     })
   )
-  result.push(emptyPara(180))
+  result.push(gap(200))
   return result
 }
 
+// ── Main builder ──────────────────────────────────────────────────────────────
 function buildDocument(client, program, week) {
   const sections = program.map((day, dayIndex) => {
     const children = []
@@ -327,17 +267,14 @@ function buildDocument(client, program, week) {
       children.push(...buildClientGrid(client))
     }
 
-    children.push(...buildDayHeader(day, dayIndex, program.length))
+    children.push(...buildDayHeading(day, dayIndex, program.length))
 
     if (dayIndex === 0 && client?.specific_goals) {
       children.push(
-        new Paragraph({
-          spacing: { after: 180 },
-          children: [
-            run('Goal note:  ', { size: 9, bold: true, color: GRAY }),
-            run(client.specific_goals, { size: 9, color: GRAY, italic: true }),
-          ],
-        })
+        para([
+          txt('Goal note:  ', { size: 9, bold: true, color: '888888' }),
+          txt(client.specific_goals, { size: 9, color: '888888', italic: true }),
+        ], { after: 200 })
       )
     }
 
@@ -345,29 +282,41 @@ function buildDocument(client, program, week) {
       children.push(...buildPhaseSection(phaseBlock))
     }
 
+    // Page break between days (except last)
+    if (dayIndex < program.length - 1) {
+      children.push(new Paragraph({ children: [new PageBreak()] }))
+    }
+
     return {
-      headers: { default: buildHeader(client, week) },
+      headers: { default: buildHeader(client?.name || '', week) },
       footers: { default: buildFooter(week) },
       properties: {
         page: {
-          margin: {
-            top:    twip(0.85),
-            bottom: twip(0.85),
-            left:   twip(0.95),
-            right:  twip(0.95),
-          },
+          size:   { width: PAGE_WIDTH, height: PAGE_HEIGHT },
+          margin: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN },
         },
       },
       children,
     }
   })
 
-  return new Document({ sections })
+  return new Document({
+    styles: {
+      default: {
+        document: {
+          run: { font: 'Arial', size: hp(10), color: '1A1A1A' },
+          paragraph: { spacing: { after: 0 } },
+        },
+      },
+    },
+    sections,
+  })
 }
 
+// ── Component ─────────────────────────────────────────────────────────────────
 export default function ExportButton({ client, program, week }) {
   async function handleExport() {
-    const doc = buildDocument(client, program, week)
+    const doc  = buildDocument(client, program, week)
     const blob = await Packer.toBlob(doc)
     const name = client
       ? `${client.name.replace(/\s+/g, '_')}_Week${week}.docx`
