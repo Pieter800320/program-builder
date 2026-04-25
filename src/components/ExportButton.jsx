@@ -33,7 +33,7 @@ const PHASE_TIMES = {
   cooldown:   '5 min',
 }
 
-const pt   = n => n * 20
+const pt   = n => n * 2
 const twip = convertInchesToTwip
 const mm   = convertMillimetersToTwip
 
@@ -45,7 +45,7 @@ function noBorder() {
 function run(text, opts = {}) {
   return new TextRun({
     text: text || '',
-    font: 'Calibri',
+    font: 'Arial',
     size: pt(opts.size || 10),
     bold: opts.bold || false,
     italics: opts.italic || false,
@@ -113,9 +113,9 @@ function buildFooter(week) {
         spacing: { before: 60 },
         children: [
           run(`Week ${week} of 4   ·   `, { size: 8, color: GRAY }),
-          new TextRun({ children: [PageNumber.CURRENT], font: 'Calibri', size: pt(8), color: GRAY }),
+          new TextRun({ children: [PageNumber.CURRENT], font: 'Arial', size: pt(8), color: GRAY }),
           run(' / ', { size: 8, color: GRAY }),
-          new TextRun({ children: [PageNumber.TOTAL_PAGES], font: 'Calibri', size: pt(8), color: GRAY }),
+          new TextRun({ children: [PageNumber.TOTAL_PAGES], font: 'Arial', size: pt(8), color: GRAY }),
         ],
       }),
     ],
