@@ -7,6 +7,7 @@ function getGasUrl() {
 export default function ExportButton({ client, program, week }) {
   const [loading, setLoading] = useState(false)
   const [docUrl, setDocUrl] = useState(null)
+  const [folderUrl, setFolderUrl] = useState(null)
   const [error, setError] = useState(null)
 
   async function handleExport() {
@@ -39,6 +40,7 @@ export default function ExportButton({ client, program, week }) {
 
       if (data.ok && data.url) {
         setDocUrl(data.url)
+        setFolderUrl(data.folderUrl || null)
         // Open the doc immediately
         window.open(data.url, '_blank')
       } else {
@@ -62,15 +64,18 @@ export default function ExportButton({ client, program, week }) {
       </button>
 
       {docUrl && (
-        <a
-          href={docUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-ghost btn-sm"
-          style={{ color: 'var(--success)' }}
-        >
-          ✓ Open doc
-        </a>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <a href={docUrl} target="_blank" rel="noreferrer"
+            className="btn btn-ghost btn-sm" style={{ color: 'var(--success)' }}>
+            ✓ Open doc
+          </a>
+          {folderUrl && (
+            <a href={folderUrl} target="_blank" rel="noreferrer"
+              className="btn btn-ghost btn-sm" style={{ color: 'var(--text3)' }}>
+              📁 Clients folder
+            </a>
+          )}
+        </div>
       )}
 
       {error && (
