@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { filterExercises } from '../logic/filter'
 
 const SUPERSET_COLORS = {
@@ -18,17 +18,36 @@ export default function ExerciseRow({
   aiLoading,
 }) {
   const [showNotes, setShowNotes] = useState(exercise.showNotes || false)
-  const [showDropdown, setShowDropdown] = useState(false)
   const [search, setSearch] = useState(exercise.exerciseName || '')
+  const [open, setOpen] = useState(false)
+  const dropdownRef = useRef(null)
+  const inputRef = useRef(null)
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClick(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  // Keep search in sync when exercise changes externally (e.g. smart fill)
+  useEffect(() => {
+    setSearch(exercise.exerciseName || '')
+  }, [exercise.exerciseName])
 
   const options = filterExercises(allExercises, {
     phase,
     patterns: dayPatterns,
     client,
+    supersetGroup: exercise.supersetGroup || null,
   })
 
   // Filter by search text
-  const filtered = search
+  const filtered = search && search !== exercise.exerciseName
     ? options.filter(o => o.name.toLowerCase().includes(search.toLowerCase()))
     : options
 
@@ -38,15 +57,23 @@ export default function ExerciseRow({
 
   function handleSelect(name) {
     setSearch(name)
-    setShowDropdown(false)
+    setOpen(false)
     onUpdate({ ...exercise, exerciseName: name })
+    inputRef.current?.blur()
   }
 
   function handleSearchChange(e) {
     const val = e.target.value
     setSearch(val)
     onUpdate({ ...exercise, exerciseName: val })
-    setShowDropdown(true)
+    setOpen(true)
+  }
+
+  function handleClear() {
+    setSearch('')
+    onUpdate({ ...exercise, exerciseName: '' })
+    setOpen(true)
+    inputRef.current?.focus()
   }
 
   async function handleGenerateNotes() {
@@ -56,49 +83,91 @@ export default function ExerciseRow({
     setShowNotes(true)
   }
 
+  const sg = exercise.supersetGroup
+
   return (
     <div>
       <div className="exercise-row">
-        {/* Editable exercise name with dropdown */}
-        {exercise.supersetGroup && (
-        <div style={{
-          background: SUPERSET_COLORS[exercise.supersetGroup] || 'var(--accent)',
-          color: '#fff',
-          fontSize: 10,
-          fontWeight: 700,
-          padding: '2px 7px',
-          borderRadius: 4,
-          alignSelf: 'center',
-          flexShrink: 0,
-          letterSpacing: '.04em',
-        }}>
-          {exercise.supersetGroup}
-        </div>
-      )}
-      <div className="exercise-name-wrap" style={{ position: 'relative', flex: 1 }}>
-          <input
-            type="text"
-            placeholder="type or select exercise…"
-            value={search}
-            onChange={handleSearchChange}
-            onFocus={() => setShowDropdown(true)}
-            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-            style={{ fontSize: 13 }}
-          />
-          {showDropdown && filtered.length > 0 && (
+        {/* Superset label badge */}
+        {sg && (
+          <div style={{
+            background: SUPERSET_COLORS[sg] || 'var(--accent)',
+            color: '#fff',
+            fontSize: 10,
+            fontWeight: 700,
+            padding: '3px 8px',
+            borderRadius: 4,
+            alignSelf: 'center',
+            flexShrink: 0,
+            letterSpacing: '.04em',
+            minWidth: 28,
+            textAlign: 'center',
+          }}>
+            {sg}
+          </div>
+        )}
+
+        {/* Searchable exercise input with dropdown */}
+        <div
+          ref={dropdownRef}
+          className="exercise-name-wrap"
+          style={{ position: 'relative', flex: 1 }}
+        >
+          <div style={{ position: 'relative' }}>
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="search or type exercise…"
+              value={search}
+              onChange={handleSearchChange}
+              onFocus={() => setOpen(true)}
+              style={{ paddingRight: 28 }}
+            />
+            {search && (
+              <button
+                onMouseDown={e => { e.preventDefault(); handleClear() }}
+                style={{
+                  position: 'absolute', right: 8, top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none', border: 'none',
+                  color: 'var(--text3)', fontSize: 16,
+                  cursor: 'pointer', lineHeight: 1, padding: 0,
+                }}
+              >×</button>
+            )}
+          </div>
+
+          {open && filtered.length > 0 && (
             <div className="exercise-dropdown">
-              {filtered.slice(0, 12).map(ex => (
+              {/* Group header if opposing slot */}
+              {(sg === 'A2' || sg === 'B2') && (
+                <div style={{
+                  padding: '6px 12px 4px',
+                  fontSize: 10,
+                  color: SUPERSET_COLORS[sg],
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '.06em',
+                  borderBottom: '1px solid var(--border)',
+                }}>
+                  Opposing pattern shown first
+                </div>
+              )}
+              {filtered.slice(0, 20).map(ex => (
                 <div
                   key={ex.name}
                   className="exercise-dropdown-item"
                   onMouseDown={() => handleSelect(ex.name)}
                 >
-                  {ex.name}
+                  <span>{ex.name}</span>
+                  {ex.unilateral && (
+                    <span style={{ fontSize: 9, color: 'var(--text3)', marginLeft: 6 }}>unilateral</span>
+                  )}
                 </div>
               ))}
-              {filtered.length > 12 && (
+              {filtered.length > 20 && (
                 <div className="exercise-dropdown-more">
-                  +{filtered.length - 12} more — keep typing to filter
+                  +{filtered.length - 20} more — type to search
                 </div>
               )}
             </div>
@@ -131,7 +200,7 @@ export default function ExerciseRow({
             {showNotes ? '▲' : '▼'}
           </button>
           <button
-            className="btn btn-ghost btn-icon ex-note-btn"
+            className="btn btn-ghost btn-icon"
             title="AI coaching cues"
             onClick={handleGenerateNotes}
             disabled={!exercise.exerciseName || aiLoading}
@@ -140,7 +209,7 @@ export default function ExerciseRow({
           </button>
           <button
             className="btn btn-ghost btn-icon"
-            title="Remove exercise"
+            title="Remove"
             onClick={onRemove}
           >
             ×

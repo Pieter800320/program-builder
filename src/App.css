@@ -532,3 +532,39 @@ label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px
   }
   .exercise-row-meta input { width: 70px; text-align: center; }
 }
+
+/* ── Exercise dropdown improvements ──────────────────────────────────────── */
+.exercise-dropdown {
+  max-height: 260px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.exercise-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.exercise-dropdown-item:last-child { border-bottom: none; }
+
+@media (max-width: 768px) {
+  .exercise-dropdown {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    max-height: 45vh;
+    z-index: 999;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+  .exercise-dropdown-item {
+    padding: 13px 16px;
+    font-size: 15px;
+    min-height: 48px;
+  }
+  .exercise-dropdown-more {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+}
