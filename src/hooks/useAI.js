@@ -225,3 +225,4 @@ Example: [{"id":"0_2","exerciseName":"Goblet Squat (Dumbbell)","notes":"Keep che
   }, [])
 
   return { generateExerciseNotes, qualityCheck, tagExercise, smartFill, loading, error }
+}
