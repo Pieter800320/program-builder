@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useSheets } from '../hooks/useSheets'
 
-export default function ClientPanel({ client, onClientChange, onGenerate }) {
+export default function ClientPanel({ client, onClientChange, onGenerate, panelOpen, setPanelOpen }) {
   const [clients, setClients] = useState([])
   const [selectedRow, setSelectedRow] = useState('')
-  const [panelOpen, setPanelOpen] = useState(false)
   const { fetchClients, fetchClient, loading, error } = useSheets()
 
   useEffect(() => {
@@ -28,10 +27,10 @@ export default function ClientPanel({ client, onClientChange, onGenerate }) {
 
   return (
     <>
-      <div className={`client-panel-inner`}>
-      <div className="panel-header" onClick={() => setPanelOpen(o => !o)}>Client</div>
+      <div className="panel-header" onClick={() => setPanelOpen(o => !o)}>
+        CLIENT
+      </div>
       <div className="panel-body">
-
         {noGas && (
           <div
             className="badge badge-warning"
@@ -75,7 +74,7 @@ export default function ClientPanel({ client, onClientChange, onGenerate }) {
         <button
           className="btn btn-primary"
           style={{ width: '100%' }}
-          onClick={onGenerate}
+          onClick={() => { onGenerate(); setPanelOpen(false) }}
           disabled={!client}
         >
           Generate Template

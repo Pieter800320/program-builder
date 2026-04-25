@@ -135,11 +135,13 @@ export default function App() {
       {/* Body */}
       <div className="app-body">
         {/* Left panel */}
-        <aside className={`client-panel${panelOpen ? " open" : ""}`} onClick={e => { if (e.target.closest(".panel-header")) setPanelOpen(o => !o) }}>
+        <aside className={`client-panel${panelOpen ? " open" : ""}`}>
           <ClientPanel
             client={client}
             onClientChange={setClient}
             onGenerate={handleGenerate}
+            panelOpen={panelOpen}
+            setPanelOpen={setPanelOpen}
           />
         </aside>
 
