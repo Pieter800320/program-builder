@@ -4,7 +4,7 @@ function getGasUrl() {
   return localStorage.getItem('pb_gas_url') || ''
 }
 
-export default function ExportButton({ client, program, week }) {
+export default function ExportButton({ client, program, week, progressionWeeks }) {
   const [loading, setLoading] = useState(false)
   const [docUrl, setDocUrl] = useState(null)
   const [folderUrl, setFolderUrl] = useState(null)
@@ -28,6 +28,7 @@ export default function ExportButton({ client, program, week }) {
         week,
         program,
         clientProfile: client,
+        progressionWeeks: progressionWeeks || [],
       })
 
       const res = await fetch(url, {

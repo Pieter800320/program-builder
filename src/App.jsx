@@ -5,6 +5,7 @@ import SessionNoteModal from './components/SessionNoteModal'
 import SettingsModal from './components/SettingsModal'
 import ExportButton from './components/ExportButton'
 import AddExerciseModal from './components/AddExerciseModal'
+import ProgressionTable, { DEFAULT_WEEKS } from './components/ProgressionTable'
 import { generateSplit, makeEmptyExercise, PHASE_DEFAULTS } from './logic/split'
 import { applyProgression, WEEK_LABELS } from './logic/progression'
 import { useAI } from './hooks/useAI'
@@ -52,6 +53,7 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false)
   const [allExercises, setAllExercises] = useState(loadAllExercises)
   const [savedIndicator, setSavedIndicator] = useState(false)
+  const [progressionWeeks, setProgressionWeeks] = useState(DEFAULT_WEEKS)
 
   // Mobile client state
   const { fetchClients, fetchClient } = useSheets()
@@ -111,6 +113,7 @@ export default function App() {
     setActiveDay(0)
     setWeek(1)
     setQualityReport(null)
+    setProgressionWeeks(DEFAULT_WEEKS)
     setTimeout(() => setProgram(initialised), 0)
   }
 
@@ -389,7 +392,7 @@ export default function App() {
             >
               🗑
             </button>
-            <ExportButton client={client} program={displayProgram || program} week={week} />
+            <ExportButton client={client} program={displayProgram || program} week={week} progressionWeeks={progressionWeeks} />
           </>
         )}
         <button
@@ -464,6 +467,14 @@ export default function App() {
                   onUpdate={updated => updateDay(activeDay, updated)}
                   onGenerateNotes={handleGenerateNotes}
                   aiLoading={aiLoading}
+                />
+              </div>
+
+              {/* Progression table */}
+              <div style={{ padding: '0 16px 24px', borderTop: '1px solid var(--border)', marginTop: 8 }}>
+                <ProgressionTable
+                  weeks={progressionWeeks}
+                  onChange={setProgressionWeeks}
                 />
               </div>
             </>
