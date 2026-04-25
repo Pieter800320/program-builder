@@ -154,21 +154,35 @@ export default function App() {
   async function handleSmartFill() {
     if (!program || !client) return
     const picks = await smartFill(program, client, allExercises)
-    console.log('Smart fill picks:', JSON.stringify(picks, null, 2))
     if (!picks || picks.length === 0) return
+
+    // picks can be flat array or slot-based array — handle both
+    const isSlotBased = picks.length > 0 && picks[0].exercises !== undefined
 
     setProgram(prev => {
       const next = prev.map((day, di) => ({
         ...day,
         phases: day.phases.map((ph, pi) => {
-          const slotId = di + '_' + pi
-          const slotPicks = picks.filter(p => 
-            p.slotId === slotId || p.id === slotId || 
-            p.slot_id === slotId || p.slot === slotId
-          )
-          if (slotPicks.length === 0) return ph
+          const slotId = String(di) + '_' + String(pi)
 
-          const exercises = slotPicks.map(pick => ({
+          let exerciseList = []
+
+          if (isSlotBased) {
+            // New format: [{id, exercises: [...]}]
+            const slot = picks.find(p => String(p.id) === slotId || String(p.slotId) === slotId)
+            if (!slot) return ph
+            exerciseList = slot.exercises || []
+          } else {
+            // Old flat format: [{id, exerciseName, ...}]
+            exerciseList = picks.filter(p =>
+              String(p.slotId) === slotId ||
+              String(p.id) === slotId
+            )
+          }
+
+          if (exerciseList.length === 0) return ph
+
+          const exercises = exerciseList.map(pick => ({
             id: crypto.randomUUID(),
             exerciseName: pick.exerciseName || '',
             sets: pick.sets || PHASE_DEFAULTS[ph.phase]?.sets || '',
