@@ -220,31 +220,12 @@ export default function App() {
       </header>
 
       {/* Mobile client bar */}
-      <div className="mobile-client-bar">
-        <select value={mobileSelectedRow} onChange={handleMobileSelect}>
-          <option value="">— select client —</option>
-          {mobileClients.map((c, i) => (
-            <option key={i} value={c._row}>{c.name}</option>
-          ))}
-        </select>
-        {client && (
-          <div className="mobile-client-info">
-            {client.age && <span className="tag">{client.age}y</span>}
-            {client.sex && <span className="tag">{client.sex}</span>}
-            {client.experience && <span className="tag">{client.experience}</span>}
-            {(client.goals || []).map(g => <span key={g} className="tag goal">{g}</span>)}
-            {(client.injuries || []).filter(i => i && i !== 'none').map(i => <span key={i} className="tag injury">{i}</span>)}
-          </div>
-        )}
-        <button
-          className="btn btn-primary"
-          style={{ marginTop: 8 }}
-          onClick={() => handleGenerate(latestClientRef.current)}
-          disabled={!latestClientRef.current}
-        >
-          Generate Template
-        </button>
-      </div>
+      <MobileClientBar
+        clients={mobileClients}
+        selectedClient={client}
+        onSelect={handleMobileSelect}
+        onGenerate={() => handleGenerate(latestClientRef.current)}
+      />
 
       {/* Body */}
       <div className="app-body">
@@ -352,4 +333,86 @@ const DEFAULT_CLIENT = {
   medical_flags: [],
   likes: [],
   dislikes: [],
+}
+
+function MobileClientBar({ clients, selectedClient, onSelect, onGenerate }) {
+  const [search, setSearch] = useState('')
+  const [open, setOpen] = useState(false)
+
+  const filtered = clients.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase())
+  )
+
+  function handlePick(c) {
+    setSearch(c.name)
+    setOpen(false)
+    // Simulate a select event
+    onSelect({ target: { value: String(c._row) } })
+  }
+
+  function handleClear() {
+    setSearch('')
+    setOpen(false)
+    onSelect({ target: { value: '' } })
+  }
+
+  return (
+    <div className="mobile-client-bar">
+      <div style={{ position: 'relative' }}>
+        <input
+          type="text"
+          placeholder="Search client…"
+          value={search}
+          onChange={e => { setSearch(e.target.value); setOpen(true) }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 200)}
+          style={{ fontSize: 16, padding: '12px 40px 12px 14px' }}
+        />
+        {search && (
+          <button
+            onClick={handleClear}
+            style={{
+              position: 'absolute', right: 10, top: '50%',
+              transform: 'translateY(-50%)',
+              background: 'none', border: 'none',
+              color: 'var(--text3)', fontSize: 18, cursor: 'pointer',
+            }}
+          >×</button>
+        )}
+        {open && filtered.length > 0 && (
+          <div className="exercise-dropdown">
+            {filtered.map((c, i) => (
+              <div
+                key={i}
+                className="exercise-dropdown-item"
+                onMouseDown={() => handlePick(c)}
+                style={{ fontSize: 15, padding: '12px 14px' }}
+              >
+                {c.name}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {selectedClient && (
+        <div className="mobile-client-info" style={{ marginTop: 8 }}>
+          {selectedClient.age && <span className="tag">{selectedClient.age}y</span>}
+          {selectedClient.sex && <span className="tag">{selectedClient.sex}</span>}
+          {selectedClient.experience && <span className="tag">{selectedClient.experience}</span>}
+          {(selectedClient.goals || []).map(g => <span key={g} className="tag goal">{g}</span>)}
+          {(selectedClient.injuries || []).filter(i => i && i !== 'none').map(i => <span key={i} className="tag injury">{i}</span>)}
+        </div>
+      )}
+
+      <button
+        className="btn btn-primary"
+        style={{ marginTop: 10, width: '100%', padding: 14, fontSize: 15 }}
+        onClick={onGenerate}
+        disabled={!selectedClient}
+      >
+        Generate Template
+      </button>
+    </div>
+  )
 }
