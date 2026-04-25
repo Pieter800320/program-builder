@@ -161,7 +161,10 @@ export default function App() {
         ...day,
         phases: day.phases.map((ph, pi) => {
           const slotId = di + '_' + pi
-          const slotPicks = picks.filter(p => p.slotId === slotId)
+          const slotPicks = picks.filter(p => 
+            p.slotId === slotId || p.id === slotId || 
+            p.slot_id === slotId || p.slot === slotId
+          )
           if (slotPicks.length === 0) return ph
 
           const exercises = slotPicks.map(pick => ({
