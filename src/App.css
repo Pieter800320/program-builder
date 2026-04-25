@@ -524,3 +524,56 @@ label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px
   .day-tab { padding: 5px 8px; font-size: 11px; }
   .phase-label { font-size: 10px; }
 }
+
+/* ── Mobile panel header fix ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .client-panel {
+    max-height: 56px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    transition: max-height .35s ease;
+  }
+  .client-panel.open {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .panel-header {
+    height: 56px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .panel-header::after {
+    content: '▼  tap to expand';
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .client-panel.open .panel-header::after {
+    content: '▲  tap to close';
+    color: var(--text3);
+  }
+  .panel-body {
+    padding: 12px;
+    overflow-y: auto;
+  }
+  .panel-footer {
+    padding: 12px;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    position: sticky;
+    bottom: 0;
+  }
+}
