@@ -20,6 +20,7 @@ export default function ExerciseRow({
   const [showNotes, setShowNotes] = useState(exercise.showNotes || false)
   const [search, setSearch] = useState(exercise.exerciseName || '')
   const [open, setOpen] = useState(false)
+  const [dropdownStyle, setDropdownStyle] = useState({})
   const dropdownRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -62,11 +63,26 @@ export default function ExerciseRow({
     inputRef.current?.blur()
   }
 
+  function openDropdown() {
+    if (inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect()
+      const spaceBelow = window.innerHeight - rect.bottom
+      const showAbove = spaceBelow < 220 && rect.top > 220
+      setDropdownStyle({
+        top: showAbove ? undefined : rect.bottom + 4,
+        bottom: showAbove ? window.innerHeight - rect.top + 4 : undefined,
+        left: rect.left,
+        width: rect.width,
+      })
+    }
+    setOpen(true)
+  }
+
   function handleSearchChange(e) {
     const val = e.target.value
     setSearch(val)
     onUpdate({ ...exercise, exerciseName: val })
-    setOpen(true)
+    openDropdown()
   }
 
   function handleClear() {
@@ -120,7 +136,7 @@ export default function ExerciseRow({
               placeholder="search or type exercise…"
               value={search}
               onChange={handleSearchChange}
-              onFocus={() => setOpen(true)}
+              onFocus={() => openDropdown()}
               style={{ paddingRight: 28 }}
             />
             {search && (
@@ -138,7 +154,7 @@ export default function ExerciseRow({
           </div>
 
           {open && filtered.length > 0 && (
-            <div className="exercise-dropdown">
+            <div className="exercise-dropdown" style={dropdownStyle}>
               {/* Group header if opposing slot */}
               {(sg === 'A2' || sg === 'B2') && (
                 <div style={{

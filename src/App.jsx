@@ -528,20 +528,20 @@ function MobileClientBar({ clients, selectedClient, onSelect, onGenerate }) {
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
 
-  const filtered = clients.filter(c =>
-    c.name.toLowerCase().includes(search.toLowerCase())
-  )
+  // Show all clients when search is empty, filter when typing
+  const filtered = search.trim()
+    ? clients.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+    : clients
 
   function handlePick(c) {
     setSearch(c.name)
     setOpen(false)
-    // Simulate a select event
     onSelect({ target: { value: String(c._row) } })
   }
 
   function handleClear() {
     setSearch('')
-    setOpen(false)
+    setOpen(true)
     onSelect({ target: { value: '' } })
   }
 
@@ -550,16 +550,17 @@ function MobileClientBar({ clients, selectedClient, onSelect, onGenerate }) {
       <div style={{ position: 'relative' }}>
         <input
           type="text"
-          placeholder="Search client…"
+          placeholder="Tap to select client…"
           value={search}
           onChange={e => { setSearch(e.target.value); setOpen(true) }}
           onFocus={() => setOpen(true)}
-          onBlur={() => setTimeout(() => setOpen(false), 200)}
+          onBlur={() => setTimeout(() => setOpen(false), 300)}
           style={{ fontSize: 16, padding: '12px 40px 12px 14px' }}
+          readOnly={false}
         />
         {search && (
           <button
-            onClick={handleClear}
+            onMouseDown={e => { e.preventDefault(); handleClear() }}
             style={{
               position: 'absolute', right: 10, top: '50%',
               transform: 'translateY(-50%)',
@@ -569,13 +570,30 @@ function MobileClientBar({ clients, selectedClient, onSelect, onGenerate }) {
           >×</button>
         )}
         {open && filtered.length > 0 && (
-          <div className="exercise-dropdown">
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0, right: 0,
+            background: 'var(--bg3)',
+            border: '1px solid var(--border2)',
+            borderRadius: 8,
+            zIndex: 9999,
+            maxHeight: '40vh',
+            overflowY: 'auto',
+            boxShadow: '0 8px 24px rgba(0,0,0,.5)',
+            marginTop: 4,
+          }}>
             {filtered.map((c, i) => (
               <div
                 key={i}
-                className="exercise-dropdown-item"
                 onMouseDown={() => handlePick(c)}
-                style={{ fontSize: 15, padding: '12px 14px' }}
+                style={{
+                  padding: '13px 16px',
+                  fontSize: 16,
+                  color: 'var(--text)',
+                  borderBottom: '1px solid var(--border)',
+                  cursor: 'pointer',
+                }}
               >
                 {c.name}
               </div>

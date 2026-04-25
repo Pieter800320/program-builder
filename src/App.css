@@ -535,8 +535,13 @@ label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px
 
 /* ── Exercise dropdown improvements ──────────────────────────────────────── */
 .exercise-dropdown {
-  max-height: 260px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+  position: fixed;
+  max-height: 300px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.6);
+  z-index: 9999;
+  min-width: 280px;
+  max-width: 480px;
+  overflow-y: auto;
 }
 .exercise-dropdown-item {
   display: flex;
@@ -550,13 +555,11 @@ label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px
 
 @media (max-width: 768px) {
   .exercise-dropdown {
-    position: fixed;
-    left: 8px;
-    right: 8px;
+    left: 8px !important;
+    right: 8px !important;
+    max-width: calc(100vw - 16px);
     max-height: 45vh;
-    z-index: 999;
     border-radius: 10px;
-    font-size: 15px;
   }
   .exercise-dropdown-item {
     padding: 13px 16px;
