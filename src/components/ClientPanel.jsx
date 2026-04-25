@@ -4,6 +4,7 @@ import { useSheets } from '../hooks/useSheets'
 export default function ClientPanel({ client, onClientChange, onGenerate }) {
   const [clients, setClients] = useState([])
   const [selectedRow, setSelectedRow] = useState('')
+  const [panelOpen, setPanelOpen] = useState(false)
   const { fetchClients, fetchClient, loading, error } = useSheets()
 
   useEffect(() => {
@@ -27,7 +28,8 @@ export default function ClientPanel({ client, onClientChange, onGenerate }) {
 
   return (
     <>
-      <div className="panel-header">Client</div>
+      <div className={`client-panel-inner`}>
+      <div className="panel-header" onClick={() => setPanelOpen(o => !o)}>Client</div>
       <div className="panel-body">
 
         {noGas && (

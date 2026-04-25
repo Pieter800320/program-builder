@@ -53,21 +53,21 @@ export default function ExerciseRow({
           ))}
         </select>
 
-        {/* Sets */}
-        <input
-          type="text"
-          placeholder="sets"
-          value={exercise.sets}
-          onChange={e => handleField('sets', e.target.value)}
-        />
-
-        {/* Reps */}
-        <input
-          type="text"
-          placeholder="reps"
-          value={exercise.reps}
-          onChange={e => handleField('reps', e.target.value)}
-        />
+        {/* Sets + Reps wrapped for mobile */}
+        <div className="exercise-row-meta">
+          <input
+            type="text"
+            placeholder="sets"
+            value={exercise.sets}
+            onChange={e => handleField('sets', e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="reps"
+            value={exercise.reps}
+            onChange={e => handleField('reps', e.target.value)}
+          />
+        </div>
 
         {/* Actions */}
         <div className="ex-actions">

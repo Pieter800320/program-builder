@@ -18,6 +18,7 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false)
   const [qualityReport, setQualityReport] = useState(null)
   const [showQuality, setShowQuality] = useState(false)
+  const [panelOpen, setPanelOpen] = useState(false)
 
   const { generateExerciseNotes, qualityCheck, aiLoading, error: aiError } = useAI()
 
@@ -134,7 +135,7 @@ export default function App() {
       {/* Body */}
       <div className="app-body">
         {/* Left panel */}
-        <aside className="client-panel">
+        <aside className={`client-panel${panelOpen ? " open" : ""}`} onClick={e => { if (e.target.closest(".panel-header")) setPanelOpen(o => !o) }}>
           <ClientPanel
             client={client}
             onClientChange={setClient}
