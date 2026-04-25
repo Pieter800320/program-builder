@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { filterExercises } from '../logic/filter'
 
+const SUPERSET_COLORS = {
+  A1: '#4f7cff', A2: '#4f7cff',
+  B1: '#10b981', B2: '#10b981',
+}
+
 export default function ExerciseRow({
   exercise,
   phase,
@@ -55,7 +60,22 @@ export default function ExerciseRow({
     <div>
       <div className="exercise-row">
         {/* Editable exercise name with dropdown */}
-        <div className="exercise-name-wrap" style={{ position: 'relative' }}>
+        {exercise.supersetGroup && (
+        <div style={{
+          background: SUPERSET_COLORS[exercise.supersetGroup] || 'var(--accent)',
+          color: '#fff',
+          fontSize: 10,
+          fontWeight: 700,
+          padding: '2px 7px',
+          borderRadius: 4,
+          alignSelf: 'center',
+          flexShrink: 0,
+          letterSpacing: '.04em',
+        }}>
+          {exercise.supersetGroup}
+        </div>
+      )}
+      <div className="exercise-name-wrap" style={{ position: 'relative', flex: 1 }}>
           <input
             type="text"
             placeholder="type or select exercise…"

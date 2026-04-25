@@ -160,23 +160,20 @@ export default function App() {
       const next = prev.map((day, di) => ({
         ...day,
         phases: day.phases.map((ph, pi) => {
-          const pick = picks.find(p => p.id === `${di}_${pi}`)
-          if (!pick) return ph
-          // Fill first empty slot, or add new one
-          const exercises = [...ph.exercises]
-          const emptyIdx = exercises.findIndex(ex => !ex.exerciseName)
-          const filled = {
-            ...(emptyIdx >= 0 ? exercises[emptyIdx] : { id: crypto.randomUUID(), sets: '', reps: '', showNotes: false }),
-            exerciseName: pick.exerciseName,
+          const slotId = di + '_' + pi
+          const slotPicks = picks.filter(p => p.slotId === slotId)
+          if (slotPicks.length === 0) return ph
+
+          const exercises = slotPicks.map(pick => ({
+            id: crypto.randomUUID(),
+            exerciseName: pick.exerciseName || '',
+            sets: pick.sets || PHASE_DEFAULTS[ph.phase]?.sets || '',
+            reps: pick.reps || PHASE_DEFAULTS[ph.phase]?.reps || '',
             notes: pick.notes || '',
-            sets: exercises[emptyIdx]?.sets || '',
-            reps: exercises[emptyIdx]?.reps || '',
-          }
-          if (emptyIdx >= 0) {
-            exercises[emptyIdx] = filled
-          } else {
-            exercises.push(filled)
-          }
+            showNotes: !!(pick.notes),
+            supersetGroup: pick.supersetGroup || null,
+          }))
+
           return { ...ph, exercises }
         }),
       }))
