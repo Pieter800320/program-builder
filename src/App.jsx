@@ -274,7 +274,7 @@ export default function App() {
               {/* 1. Client Profile — collapsible */}
               <CollapsibleSection
                 label="Client Profile"
-                summary={(editableClient || client)?.name || ''}
+                summary={null}
                 open={profileOpen}
                 onToggle={() => setProfileOpen(o => !o)}
               >
@@ -289,7 +289,7 @@ export default function App() {
               {/* 2. Progression Plan — collapsible */}
               <CollapsibleSection
                 label="Progression Plan"
-                summary={progressionWeeks.map(w => w.label).join(' · ')}
+                summary={null}
                 open={progressionOpen}
                 onToggle={() => setProgressionOpen(o => !o)}
               >
@@ -301,16 +301,15 @@ export default function App() {
               {/* 3. Session — collapsible with day tabs inside */}
               <CollapsibleSection
                 label="Session"
-                summary={program[activeDay]?.title || 'Day ' + (activeDay + 1)}
+                summary={null}
                 open={sessionOpen}
                 onToggle={() => setSessionOpen(o => !o)}
               >
                 <div className="day-tabs-bar" style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
                   {program.map((day, i) => (
-                    <div key={i} className={`day-tab-wrap ${activeDay === i ? 'active' : ''}`} onClick={() => setActiveDay(i)}>
-                      <span className="day-tab-label">{day.label}</span>
-                      <span className="day-tab-title">{day.title || 'No focus set'}</span>
-                    </div>
+                    <button key={i} className={`day-tab ${activeDay === i ? 'active' : ''}`} onClick={() => setActiveDay(i)}>
+                      {day.label}
+                    </button>
                   ))}
                 </div>
                 {/* Pattern picker for active day */}
