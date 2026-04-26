@@ -57,7 +57,7 @@ export default function ExportButton({ client, program, week, progressionWeeks, 
 
   if (navMode) {
     return (
-      <>
+      <div style={{ position: 'relative' }}>
         <button
           className="nav-btn"
           onClick={handleExport}
@@ -65,25 +65,56 @@ export default function ExportButton({ client, program, week, progressionWeeks, 
         >
           {loading ? 'Creating…' : 'Create'}
         </button>
+        {error && <span style={{ fontSize: 11, color: 'var(--danger)', marginLeft: 6 }}>{error}</span>}
         {docUrl && (
-          <>
-            <span className="nav-divider">|</span>
-            <a href={docUrl} target="_blank" rel="noreferrer"
-              className="nav-btn" style={{ color: 'var(--success)', textDecoration: 'none' }}>
-              Open doc
-            </a>
-            <span className="nav-divider">|</span>
-            <button
-              className="nav-btn"
-              onClick={() => { navigator.clipboard.writeText(docUrl); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
-              style={{ color: copied ? 'var(--success)' : 'var(--accent)' }}
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            right: 0,
+            marginTop: 8,
+            background: 'var(--bg2)',
+            border: '1px solid var(--border)',
+            borderRadius: 8,
+            padding: '12px 16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 10,
+            zIndex: 999,
+            minWidth: 200,
+            boxShadow: '0 4px 16px rgba(0,0,0,.4)',
+          }}>
+            <span style={{ fontSize: 12, color: 'var(--success)', fontWeight: 600 }}>
+              ✓ Document created
+            </span>
+            <a
+              href={docUrl}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                fontSize: 13, color: 'var(--text)',
+                textDecoration: 'none', fontWeight: 500,
+                padding: '8px 12px',
+                background: 'var(--accent)',
+                borderRadius: 6,
+                textAlign: 'center',
+                display: 'block',
+              }}
             >
-              {copied ? '✓ Copied!' : 'Copy link'}
+              Share document
+            </a>
+            <button
+              onClick={() => setDocUrl(null)}
+              style={{
+                background: 'none', border: 'none', padding: 0,
+                fontSize: 11, color: 'var(--text3)', cursor: 'pointer',
+                textAlign: 'center', fontFamily: 'inherit',
+              }}
+            >
+              dismiss
             </button>
-          </>
+          </div>
         )}
-        {error && <span style={{ fontSize: 11, color: 'var(--danger)' }}>{error}</span>}
-      </>
+      </div>
     )
   }
 
