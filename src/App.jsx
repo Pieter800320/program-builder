@@ -45,6 +45,7 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false)
   const [allExercises, setAllExercises] = useState(loadAllExercises)
   const [savedIndicator, setSavedIndicator] = useState(false)
+  const [smartFillInfo, setSmartFillInfo] = useState(null)
   const [progressionWeeks, setProgressionWeeks] = useState(DEFAULT_WEEKS)
   const [editableClient, setEditableClient] = useState(null)
 
@@ -146,48 +147,52 @@ export default function App() {
 
   async function handleSmartFill() {
     if (!program || !client) return
-    const PHASE_COUNT = { warmup: 3, activation: 3, primer: 2, kpi: 2, accessory: 4, finisher: 1, cooldown: 2 }
-    const SUPERSET_GROUPS = ['A1', 'A2', 'B1', 'B2']
-    const picks = await smartFill(program, client, allExercises)
-    if (!picks || picks.length === 0) return
-    const pickMap = {}
-    picks.forEach(p => { const id = String(p.id || p.slotId || ''); pickMap[id] = p })
+
+    const result = await smartFill(program, client, allExercises, activeDay)
+    if (!result || !result.phases) return
+
+    const SUPERSET_ORDER = ['A1', 'A2', 'B1', 'B2']
+
+    // Update the active day with AI-generated exercises
     setProgram(prev => {
-      const next = prev.map((day, di) => ({
-        ...day,
-        phases: day.phases.map((ph, pi) => {
-          const slotId = String(di) + '_' + String(pi)
-          const count = PHASE_COUNT[ph.phase] || 1
-          const aiPick = pickMap[slotId]
-          const filtered = filterExercises(allExercises, { phase: ph.phase, patterns: ph.patterns, client })
-          const exercises = []
-          const firstEx = aiPick
-            ? { id: crypto.randomUUID(), exerciseName: aiPick.exerciseName || '', sets: PHASE_DEFAULTS[ph.phase]?.sets || '', reps: PHASE_DEFAULTS[ph.phase]?.reps || '', notes: aiPick.notes || '', showNotes: !!(aiPick.notes), supersetGroup: ph.phase === 'accessory' ? SUPERSET_GROUPS[0] : null }
-            : filtered.length > 0 ? { id: crypto.randomUUID(), exerciseName: filtered[0].name, sets: PHASE_DEFAULTS[ph.phase]?.sets || '', reps: PHASE_DEFAULTS[ph.phase]?.reps || '', notes: '', showNotes: false, supersetGroup: ph.phase === 'accessory' ? SUPERSET_GROUPS[0] : null } : null
-          if (firstEx && firstEx.exerciseName) exercises.push(firstEx)
-          if (ph.phase === 'accessory' && count === 4) {
-            const OPPOSING = { push: ['pull'], pull: ['push'], squat: ['hinge'], hinge: ['squat'], lunge: ['hinge', 'carry'], carry: ['core'], core: ['carry', 'rotation'], rotation: ['core'] }
-            const primaryPatterns = ph.patterns.length > 0 ? ph.patterns : ['push']
-            const opposingPatterns = primaryPatterns.flatMap(p => OPPOSING[p] || ['core'])
-            const usedNames = new Set(exercises.map(e => e.exerciseName))
-            const opposingFiltered = filterExercises(allExercises, { phase: ph.phase, patterns: opposingPatterns, client }).filter(ex => !usedNames.has(ex.name))
-            if (opposingFiltered[0]) { exercises.push({ id: crypto.randomUUID(), exerciseName: opposingFiltered[0].name, sets: PHASE_DEFAULTS[ph.phase]?.sets || '', reps: PHASE_DEFAULTS[ph.phase]?.reps || '', notes: '', showNotes: false, supersetGroup: 'A2' }); usedNames.add(opposingFiltered[0].name) }
-            const b1Filtered = filterExercises(allExercises, { phase: ph.phase, patterns: primaryPatterns, client }).filter(ex => !usedNames.has(ex.name))
-            if (b1Filtered[0]) { exercises.push({ id: crypto.randomUUID(), exerciseName: b1Filtered[0].name, sets: PHASE_DEFAULTS[ph.phase]?.sets || '', reps: PHASE_DEFAULTS[ph.phase]?.reps || '', notes: '', showNotes: false, supersetGroup: 'B1' }); usedNames.add(b1Filtered[0].name) }
-            const b2Filtered = filterExercises(allExercises, { phase: ph.phase, patterns: opposingPatterns, client }).filter(ex => !usedNames.has(ex.name))
-            if (b2Filtered[0]) exercises.push({ id: crypto.randomUUID(), exerciseName: b2Filtered[0].name, sets: PHASE_DEFAULTS[ph.phase]?.sets || '', reps: PHASE_DEFAULTS[ph.phase]?.reps || '', notes: '', showNotes: false, supersetGroup: 'B2' })
-          } else {
-            const usedNames = new Set(exercises.map(e => e.exerciseName))
-            const remaining = filtered.filter(ex => !usedNames.has(ex.name))
-            for (let i = 1; i < count && i - 1 < remaining.length; i++) {
-              exercises.push({ id: crypto.randomUUID(), exerciseName: remaining[i-1].name, sets: PHASE_DEFAULTS[ph.phase]?.sets || '', reps: PHASE_DEFAULTS[ph.phase]?.reps || '', notes: '', showNotes: false, supersetGroup: null })
-            }
-          }
-          return exercises.length === 0 ? ph : { ...ph, exercises }
-        }),
-      }))
+      const next = [...prev]
+      const day = { ...next[activeDay] }
+
+      // Update patterns and title if AI suggested them
+      if (result.suggestedPatterns && result.suggestedPatterns.length > 0) {
+        day.patterns = result.suggestedPatterns
+        day.title = result.suggestedPatterns
+          .map(p => p.charAt(0).toUpperCase() + p.slice(1))
+          .join(' + ')
+      }
+
+      day.phases = day.phases.map(ph => {
+        const aiExercises = result.phases[ph.phase]
+        if (!aiExercises || aiExercises.length === 0) return ph
+
+        const exercises = aiExercises.map((ex, i) => ({
+          id: crypto.randomUUID(),
+          exerciseName: ex.exerciseName || '',
+          sets: ex.sets || PHASE_DEFAULTS[ph.phase]?.sets || '',
+          reps: ex.reps || PHASE_DEFAULTS[ph.phase]?.reps || '',
+          notes: ex.notes || '',
+          showNotes: !!(ex.notes),
+          supersetGroup: ex.supersetGroup || null,
+          aiGenerated: true,
+        }))
+
+        return { ...ph, exercises }
+      })
+
+      next[activeDay] = day
       return next
     })
+
+    // Store detection info for display
+    if (result.archetype || result.dayType) {
+      setSmartFillInfo({ archetype: result.archetype, dayType: result.dayType })
+      setTimeout(() => setSmartFillInfo(null), 5000)
+    }
   }
 
   function handleDeleteProgram() {
@@ -222,6 +227,11 @@ export default function App() {
             <button className="nav-btn" onClick={handleSmartFill} disabled={aiLoading}>
               {aiLoading ? <span className="loader" style={{ width: 10, height: 10 }} /> : 'Smart Fill'}
             </button>
+            {smartFillInfo && (
+              <span style={{ fontSize: 10, color: 'var(--text3)', whiteSpace: 'nowrap' }}>
+                {smartFillInfo.dayType} · {smartFillInfo.archetype}
+              </span>
+            )}
             <span className="nav-divider">|</span>
             <button className="nav-btn" onClick={handleQualityCheck} disabled={aiLoading}>Quality Check</button>
             <span className="nav-divider">|</span>

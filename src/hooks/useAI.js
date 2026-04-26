@@ -158,70 +158,158 @@ export function useAI() {
     }
   }, [])
 
-  const smartFill = useCallback(async (program, client, allExercises) => {
+
+  const smartFill = useCallback(async (program, client, allExercises, dayIndex) => {
     setLoading(true)
     setError(null)
     try {
+      // ── Step 1: Determine archetype ─────────────────────────────────────
+      const injuries = [...(client.injuries || []), ...(client.medical_flags || [])]
+      const goals = client.goals || []
+      const exp = client.experience || 'beginner'
+
+      let archetype = 'Minimalist Strength'
+      if (exp === 'beginner') {
+        archetype = 'Absolute Beginner'
+      } else if (injuries.includes('hypermobility') || injuries.length >= 3) {
+        archetype = 'Rehab-Forward'
+      } else if ((client.age >= 50) && (goals.includes('health') || goals.includes('mobility'))) {
+        archetype = 'Longevity'
+      } else if (goals.includes('fat_loss') && goals.includes('conditioning')) {
+        archetype = 'Fat Loss'
+      } else if (goals.includes('strength') && goals.includes('conditioning')) {
+        archetype = 'Strength + Conditioning'
+      } else if (goals.includes('strength')) {
+        archetype = 'Minimalist Strength'
+      } else if (goals.includes('hypertrophy')) {
+        archetype = 'Minimalist Strength'
+      }
+
+      // ── Step 2: Determine High/Low day ──────────────────────────────────
+      const totalDays = program.length
+      let dayType = 'HIGH'
+      if (totalDays === 2) {
+        dayType = dayIndex === 0 ? 'HIGH' : 'LOW'
+      } else if (totalDays === 3) {
+        dayType = dayIndex === 1 ? 'LOW' : 'HIGH'
+      } else if (totalDays === 4) {
+        dayType = dayIndex % 2 === 0 ? 'HIGH' : 'LOW'
+      }
+
+      // ── Step 3: Build exercise list (names only, no filtering) ──────────
+      const exerciseNames = allExercises.map(ex => ex.name).join(', ')
+
+      // ── Step 4: Build system prompt ─────────────────────────────────────
       const systemPrompt = [
-        'You are an expert strength coach trained in Dr. John Rusin\'s pain-free performance methodology.',
-        'Select the most appropriate exercise for each training slot given the client profile and day focus.',
-        'Return ONLY valid JSON - no markdown, no explanation outside the JSON.',
-        'For each slot, pick ONE exercise name (must match exactly from the available list) and ONE short coaching note (max 12 words).',
+        'You are an expert strength and conditioning coach. You create training programs using Dr. John Rusin's Pain-Free Performance methodology combined with evidence-based programming principles.',
+        '',
+        '=== RUSIN PHASE STRUCTURE ===',
+        'Every session has exactly these phases in order:',
+        '1. WARMUP: Soft tissue + dynamic movement prep. 3 exercises.',
+        '2. ACTIVATION: Targeted glute/lat/corrective work. 2-3 exercises.',
+        '3. PRIMER: Movement-specific prep for KPI.',
+        '   - Mechanical: 1 exercise matching KPI pattern at low load',
+        '   - Neurological: 1 explosive/CNS exercise (jump, throw, bound) matching day pattern',
+        '4. KPI: Primary compound movement(s). The heart of the session.',
+        '   - HIGH day: 1-2 heavy compounds',
+        '   - LOW day: 1 technique lift at reduced load',
+        '5. ACCESSORY: Antagonist superset pairs.',
+        '   - A1 + A2: first pair (opposing patterns)',
+        '   - B1 + B2: second pair (opposing patterns)',
+        '   - HIGH day: 4 exercises total',
+        '   - LOW day: 2 exercises (1 pair only)',
+        '6. FINISHER: 1 conditioning piece.',
+        '   - HIGH day: loaded carry or metabolic circuit',
+        '   - LOW day: steady cardio or flow work',
+        '7. COOLDOWN: 2-3 recovery exercises (stretches, breathing, foam rolling)',
+        '',
+        '=== ARCHETYPES & REP SCHEMES ===',
+        'Absolute Beginner: KPI 2-3x10-12, Accessory 2x12-15, 90s rest. Focus on technique.',
+        'Rehab-Forward: KPI 2-3x10-15, Accessory 2x10-12, 90-120s rest. Conservative loads, avoid pain triggers.',
+        'Longevity: KPI 2-3x8-12, Accessory 2x10-12, 60-90s rest. Low joint stress, mobility emphasis.',
+        'Fat Loss: KPI 3-4x8-12, Accessory 3x12-15, 30-60s rest. Higher density, minimal rest.',
+        'Strength + Conditioning: KPI 3-4x5-8, Accessory 3x8-12, 60-120s rest. Compounds + metabolic.',
+        'Minimalist Strength: KPI 4-5x4-6, Accessory 2-3x8-12, 90-120s rest. Load progression focus.',
+        '',
+        '=== HIGH vs LOW DAY ===',
+        'HIGH day: Heavy KPI, strength focus, opposing accessory supersets, metabolic finisher.',
+        'LOW day: Technique KPI at 60% load, core focus, one accessory pair, steady conditioning.',
+        '',
+        '=== INJURY RULES ===',
+        'knee_pain: Avoid deep knee flexion, heavy squats. Prefer hip-dominant and upper body.',
+        'low_back_pain: Avoid heavy spinal loading. Prefer hip hinge with light load, core stability.',
+        'shoulder_pain: Avoid overhead pressing. Prefer horizontal push/pull, rotator cuff work.',
+        'wrist_pain: Avoid load through wrist. Prefer neutral grip, carries, lower body focus.',
+        'elbow_pain: Avoid heavy curls/triceps. Light loads, wrist-neutral grips.',
+        'hypermobility: No end-range stretching. Prioritize stability, control, isometrics.',
+        '',
+        '=== OUTPUT FORMAT ===',
+        'Return ONLY valid JSON. No markdown, no explanation.',
+        'Format:',
+        '{',
+        '  "archetype": "string",',
+        '  "dayType": "HIGH or LOW",',
+        '  "suggestedPatterns": ["push", "squat"],',
+        '  "phases": {',
+        '    "warmup": [',
+        '      {"exerciseName": "...", "sets": "1", "reps": "60s", "notes": "..."}',
+        '    ],',
+        '    "activation": [...],',
+        '    "primer": [...],',
+        '    "kpi": [...],',
+        '    "accessory": [',
+        '      {"exerciseName": "...", "sets": "3", "reps": "12", "notes": "...", "supersetGroup": "A1"},',
+        '      {"exerciseName": "...", "sets": "3", "reps": "12", "notes": "...", "supersetGroup": "A2"},',
+        '      {"exerciseName": "...", "sets": "3", "reps": "12", "notes": "...", "supersetGroup": "B1"},',
+        '      {"exerciseName": "...", "sets": "3", "reps": "12", "notes": "...", "supersetGroup": "B2"}',
+        '    ],',
+        '    "finisher": [...],',
+        '    "cooldown": [...]',
+        '  }',
+        '}',
       ].join('\n')
 
-      const clientEquip = new Set(client.equipment_available || [])
-      const injuries = new Set([...(client.injuries || []), ...(client.medical_flags || [])])
-      const SKILL_RANK = { beginner: 0, intermediate: 1, advanced: 2 }
-      const clientSkill = SKILL_RANK[client.experience] ?? 0
+      // ── Step 5: Build user prompt ───────────────────────────────────────
+      const injuryList = injuries.map(i => i.replace(/_/g, ' ')).join(', ') || 'none'
+      const goalList = goals.map(g => g.replace(/_/g, ' ')).join(', ') || 'general fitness'
+      const equip = (client.equipment_available || []).slice(0, 10).join(', ') || 'full gym'
+      const dayPatterns = (program[dayIndex]?.patterns || []).join(', ') || 'not specified'
 
-      const slots = []
-      program.forEach((day, di) => {
-        day.phases.forEach((ph, pi) => {
-          if (ph.phase === 'warmup' || ph.phase === 'cooldown') return
-          const available = allExercises
-            .filter(ex => {
-              if (!ex.phases.includes(ph.phase)) return false
-              if (ph.patterns.length > 0 && !ph.patterns.some(p => ex.patterns.includes(p))) return false
-              if (clientEquip.size > 0 && !ex.equipment.some(e => clientEquip.has(e))) return false
-              if (ex.contraindications.some(c => injuries.has(c))) return false
-              const maxSkill = Math.max(...ex.skill_level.map(s => SKILL_RANK[s] ?? 0))
-              if (maxSkill > clientSkill) return false
-              return true
-            })
-            .slice(0, 15)
-            .map(e => e.name)
-
-          if (available.length === 0) return
-          slots.push({ id: di + '_' + pi, day: day.title, phase: ph.phase, patterns: ph.patterns, available })
-        })
-      })
-
-      const injuryList = [...injuries].join(', ') || 'none'
-      const goalList = (client.goals || []).join(', ') || 'general'
-
-      const promptLines = [
-        'Client profile:',
-        '- Name: ' + client.name,
-        '- Experience: ' + client.experience,
-        '- Goals: ' + goalList,
-        '- Injuries: ' + injuryList,
-        '- Specific goal: ' + (client.specific_goals || 'none'),
+      const prompt = [
+        'Create a complete ' + dayType + ' day training session for this client:',
         '',
-        'Training slots to fill:',
-        JSON.stringify(slots, null, 2),
+        'Client: ' + client.name,
+        'Age: ' + (client.age || 'unknown'),
+        'Sex: ' + (client.sex || 'unknown'),
+        'Experience: ' + exp,
+        'Goals: ' + goalList,
+        'Specific goal: ' + (client.specific_goals || 'none'),
+        'Injuries/flags: ' + injuryList,
+        'Session duration: ' + (client.session_duration || 60) + ' minutes',
+        'Equipment: ' + equip,
         '',
-        'Return a JSON array. Each item must have:',
-        '- "id": the slot id',
-        '- "exerciseName": exact name from the available list',
-        '- "notes": one short coaching cue (max 12 words)',
-      ]
+        'Auto-detected archetype: ' + archetype,
+        'Day type: ' + dayType + ' (Day ' + (dayIndex + 1) + ' of ' + totalDays + ')',
+        'Selected patterns for this day: ' + dayPatterns,
+        '',
+        'Available exercises (use names exactly as written, or suggest new ones if better):',
+        exerciseNames,
+        '',
+        'Generate the complete session following Rusin's phase structure.',
+        'Choose patterns that make sense for this day type and client.',
+        'Apply the ' + archetype + ' rep/set scheme throughout.',
+        'Respect all injury constraints.',
+        'Write coaching notes that are specific and actionable (max 12 words each).',
+      ].join('\n')
 
-      const text = await callClaude(promptLines.join('\n'), systemPrompt)
+      const text = await callClaude(prompt, systemPrompt, 2000)
       const clean = text.replace(/```json|```/g, '').trim()
-      return JSON.parse(clean)
+      const result = JSON.parse(clean)
+      return result
+
     } catch (e) {
-      setError(e.message)
-      return []
+      setError('Smart Fill failed: ' + e.message)
+      return null
     } finally {
       setLoading(false)
     }
