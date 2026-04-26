@@ -131,6 +131,20 @@ export default function App() {
     })
   }
 
+  function clearDay(dayIndex) {
+    setProgram(prev => {
+      const next = [...prev]
+      next[dayIndex] = {
+        ...next[dayIndex],
+        phases: next[dayIndex].phases.map(ph => ({
+          ...ph,
+          exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }],
+        })),
+      }
+      return next
+    })
+  }
+
   const handleGenerateNotes = useCallback(
     async (exerciseName, phase) => {
       if (!client) return ''
@@ -225,11 +239,17 @@ export default function App() {
         {program && (
           <nav className="app-header-nav">
             <button
-              className={`nav-btn ${aiLoading ? 'nav-btn-loading' : ''}`}
+              className="nav-btn"
               onClick={handleSmartFill}
               disabled={aiLoading}
+              style={aiLoading ? {
+                color: '#fff',
+                background: 'var(--accent)',
+                borderRadius: 4,
+                padding: '2px 8px',
+              } : {}}
             >
-              {aiLoading ? '⟳ Thinking…' : 'Smart Fill'}
+              {aiLoading ? '⟳ Filling…' : 'Smart Fill'}
             </button>
             {smartFillInfo && !aiLoading && (
               <span style={{ fontSize: 10, color: 'var(--text3)', whiteSpace: 'nowrap' }}>
@@ -237,12 +257,8 @@ export default function App() {
               </span>
             )}
             <span className="nav-divider">|</span>
-            <button
-              className={`nav-btn ${aiLoading ? 'nav-btn-loading' : ''}`}
-              onClick={handleQualityCheck}
-              disabled={aiLoading}
-            >
-              {aiLoading ? '⟳ Thinking…' : 'Quality Check'}
+            <button className="nav-btn" onClick={handleQualityCheck} disabled={aiLoading}>
+              Quality Check
             </button>
             <span className="nav-divider">|</span>
             <ExportButton client={editableClient || client} program={program} progressionWeeks={progressionWeeks} navMode={true} />
@@ -348,6 +364,23 @@ export default function App() {
                       {day.label}
                     </button>
                   ))}
+                  <button
+                    onClick={() => clearDay(activeDay)}
+                    style={{
+                      marginLeft: 'auto',
+                      background: 'none',
+                      border: 'none',
+                      fontSize: 11,
+                      color: 'var(--text3)',
+                      cursor: 'pointer',
+                      padding: '0 12px',
+                      flexShrink: 0,
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--danger)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--text3)'}
+                  >
+                    Clear
+                  </button>
                 </div>
                 {/* Pattern picker for active day */}
                 <PatternPicker
