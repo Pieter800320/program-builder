@@ -309,20 +309,15 @@ export default function App() {
                   {program.map((day, i) => (
                     <div key={i} className={`day-tab-wrap ${activeDay === i ? 'active' : ''}`} onClick={() => setActiveDay(i)}>
                       <span className="day-tab-label">{day.label}</span>
-                      {activeDay === i ? (
-                        <input
-                          className="day-tab-input"
-                          value={day.title || ''}
-                          onChange={e => updateDayTitle(i, e.target.value)}
-                          onClick={e => e.stopPropagation()}
-                          placeholder="Day title…"
-                        />
-                      ) : (
-                        <span className="day-tab-title">{day.title}</span>
-                      )}
+                      <span className="day-tab-title">{day.title || 'No focus set'}</span>
                     </div>
                   ))}
                 </div>
+                {/* Pattern picker for active day */}
+                <PatternPicker
+                  day={program[activeDay]}
+                  onUpdate={updated => updateDay(activeDay, updated)}
+                />
                 <div className="day-content">
                   <DayBlock
                     day={program[activeDay]}
@@ -464,4 +459,118 @@ const DEFAULT_CLIENT = {
   experience: 'beginner',
   equipment_available: ['barbell','dumbbell','cable','machine','kettlebell','bodyweight','band','landmine','medicine_ball','pull_up_bar','powerbag','rowing_machine','assault_bike','assault_treadmill','back_extension_bench','leg_press_machine','battle_ropes','foam_roller','sled'],
   injuries: [], medical_flags: [], likes: [], dislikes: [],
+}
+
+// ── Pattern Picker ────────────────────────────────────────────────────────────
+const ALL_PATTERNS = [
+  { id: 'push',         label: 'Push',         desc: 'Press, push-up, overhead' },
+  { id: 'pull',         label: 'Pull',         desc: 'Row, pull-up, lat pulldown' },
+  { id: 'squat',        label: 'Squat',        desc: 'Squat, leg press, goblet' },
+  { id: 'hinge',        label: 'Hinge',        desc: 'Deadlift, RDL, swing' },
+  { id: 'lunge',        label: 'Lunge',        desc: 'Split squat, step-up, reverse lunge' },
+  { id: 'carry',        label: 'Carry',        desc: 'Farmer, suitcase, overhead carry' },
+  { id: 'core',         label: 'Core',         desc: 'Plank, anti-rotation, stability' },
+  { id: 'rotation',     label: 'Rotation',     desc: 'Cable twist, med ball, landmine' },
+  { id: 'explosive',    label: 'Explosive',    desc: 'Jump, throw, clean, speed' },
+  { id: 'conditioning', label: 'Conditioning', desc: 'Bike, row, complexes, intervals' },
+  { id: 'locomotion',   label: 'Locomotion',   desc: 'Crawl, sled, agility, crawl patterns' },
+]
+
+function generateTitle(patterns) {
+  if (!patterns || patterns.length === 0) return 'Rest / Recovery'
+  const labels = patterns.map(p => {
+    const found = ALL_PATTERNS.find(ap => ap.id === p)
+    return found ? found.label : p
+  })
+  return labels.join(' + ')
+}
+
+function PatternPicker({ day, onUpdate }) {
+  const [open, setOpen] = useState(false)
+  const selected = day.patterns || []
+
+  function toggle(patternId) {
+    const next = selected.includes(patternId)
+      ? selected.filter(p => p !== patternId)
+      : [...selected, patternId]
+    const title = generateTitle(next)
+    onUpdate({ ...day, patterns: next, title })
+  }
+
+  return (
+    <div style={{ padding: '8px 16px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
+      <div
+        style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+        onClick={() => setOpen(o => !o)}
+      >
+        <span style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em' }}>
+          Focus patterns
+        </span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, flex: 1 }}>
+          {selected.length === 0 ? (
+            <span style={{ fontSize: 11, color: 'var(--text3)', fontStyle: 'italic' }}>none selected — tap to set</span>
+          ) : selected.map(p => {
+            const found = ALL_PATTERNS.find(ap => ap.id === p)
+            return (
+              <span key={p} style={{
+                fontSize: 11, padding: '2px 8px', borderRadius: 12,
+                background: 'rgba(79,124,255,.15)', color: '#7fa3ff',
+                border: '1px solid rgba(79,124,255,.3)',
+              }}>
+                {found ? found.label : p}
+              </span>
+            )
+          })}
+        </div>
+        <span style={{ fontSize: 10, color: 'var(--text3)' }}>{open ? '▲' : '▼'}</span>
+      </div>
+
+      {open && (
+        <div style={{
+          marginTop: 10,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+          gap: 6,
+        }}>
+          {ALL_PATTERNS.map(p => {
+            const checked = selected.includes(p.id)
+            return (
+              <div
+                key={p.id}
+                onClick={() => toggle(p.id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: 8,
+                  padding: '8px 10px',
+                  borderRadius: 6,
+                  cursor: 'pointer',
+                  background: checked ? 'rgba(79,124,255,.1)' : 'var(--bg3)',
+                  border: checked ? '1px solid rgba(79,124,255,.4)' : '1px solid var(--border)',
+                  transition: 'all .15s',
+                }}
+              >
+                <div style={{
+                  width: 16, height: 16, borderRadius: 4, flexShrink: 0, marginTop: 1,
+                  background: checked ? 'var(--accent)' : 'transparent',
+                  border: checked ? '1px solid var(--accent)' : '1px solid var(--border2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  {checked && <span style={{ color: '#fff', fontSize: 10, lineHeight: 1 }}>✓</span>}
+                </div>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: checked ? '#7fa3ff' : 'var(--text)' }}>
+                    {p.label}
+                  </div>
+                  <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 1 }}>
+                    {p.desc}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
 }
