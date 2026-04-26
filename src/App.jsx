@@ -47,6 +47,11 @@ export default function App() {
   const [savedIndicator, setSavedIndicator] = useState(false)
   const [progressionWeeks, setProgressionWeeks] = useState(DEFAULT_WEEKS)
   const [editableClient, setEditableClient] = useState(null)
+
+  // Sync editableClient whenever client loads
+  useEffect(() => {
+    if (client) setEditableClient(c => c?.name === client.name ? c : client)
+  }, [client])
   const [progressionOpen, setProgressionOpen] = useState(false)
   const [sessionOpen, setSessionOpen] = useState(true)
   const latestClientRef = useRef(null)
