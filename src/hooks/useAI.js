@@ -201,7 +201,7 @@ export function useAI() {
 
       // ── Step 4: Build system prompt ─────────────────────────────────────
       const systemPrompt = [
-        'You are an expert strength and conditioning coach. You create training programs using Dr. John Rusin's Pain-Free Performance methodology combined with evidence-based programming principles.',
+        'You are an expert strength and conditioning coach. You create training programs using Dr. John Rusin Pain-Free Performance methodology combined with evidence-based programming principles.',
         '',
         '=== RUSIN PHASE STRUCTURE ===',
         'Every session has exactly these phases in order:',
@@ -295,7 +295,7 @@ export function useAI() {
         'Available exercises (use names exactly as written, or suggest new ones if better):',
         exerciseNames,
         '',
-        'Generate the complete session following Rusin's phase structure.',
+        'Generate the complete session following the Rusin phase structure.',
         'Choose patterns that make sense for this day type and client.',
         'Apply the ' + archetype + ' rep/set scheme throughout.',
         'Respect all injury constraints.',
