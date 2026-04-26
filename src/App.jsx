@@ -259,6 +259,16 @@ export default function App() {
                 </div>
               )}
 
+              {/* Client profile card */}
+              {(editableClient || client) && (
+                <div style={{ padding: '16px 16px 0' }}>
+                  <ClientProfileCard
+                    client={editableClient || client}
+                    onChange={c => setEditableClient(c)}
+                  />
+                </div>
+              )}
+
               {/* Day tabs */}
               <div className="day-tabs-bar">
                 {program.map((day, i) => (
