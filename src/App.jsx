@@ -132,6 +132,10 @@ export default function App() {
     })
   }
 
+  function renumberDays(days) {
+    return days.map((day, i) => ({ ...day, label: 'Day ' + (i + 1) }))
+  }
+
   function addDay() {
     const dayNum = program.length + 1
     const newDay = {
@@ -148,13 +152,13 @@ export default function App() {
         { phase: 'cooldown',   patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
       ]
     }
-    setProgram(prev => [...prev, newDay])
+    setProgram(prev => renumberDays([...prev, newDay]))
     setActiveDay(program.length)
   }
 
   function removeDay() {
     if (program.length <= 1) return
-    setProgram(prev => prev.filter((_, i) => i !== activeDay))
+    setProgram(prev => renumberDays(prev.filter((_, i) => i !== activeDay)))
     setActiveDay(prev => Math.min(prev, program.length - 2))
   }
 
