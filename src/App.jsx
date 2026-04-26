@@ -132,6 +132,26 @@ export default function App() {
     })
   }
 
+  function addDay() {
+    const dayNum = program.length + 1
+    const newDay = {
+      label: 'Day ' + dayNum,
+      title: '',
+      patterns: [],
+      phases: [
+        { phase: 'warmup',     patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
+        { phase: 'activation', patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
+        { phase: 'primer',     patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
+        { phase: 'kpi',        patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
+        { phase: 'accessory',  patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
+        { phase: 'finisher',   patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
+        { phase: 'cooldown',   patterns: [], exercises: [{ id: crypto.randomUUID(), exerciseName: '', sets: '', reps: '', notes: '', showNotes: false, supersetGroup: null }] },
+      ]
+    }
+    setProgram(prev => [...prev, newDay])
+    setActiveDay(program.length)
+  }
+
   function clearDay(dayIndex) {
     setProgram(prev => {
       const next = [...prev]
@@ -403,23 +423,30 @@ export default function App() {
                       {day.label}
                     </button>
                   ))}
-                  <button
-                    onClick={() => clearDay(activeDay)}
-                    style={{
-                      marginLeft: 'auto',
-                      background: 'none',
-                      border: 'none',
-                      fontSize: 11,
-                      color: 'var(--text3)',
-                      cursor: 'pointer',
-                      padding: '0 12px',
-                      flexShrink: 0,
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.color = 'var(--danger)'}
-                    onMouseLeave={e => e.currentTarget.style.color = 'var(--text3)'}
-                  >
-                    Clear
-                  </button>
+                  <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+                    <button
+                      onClick={addDay}
+                      style={{
+                        background: 'none', border: 'none',
+                        fontSize: 11, color: 'var(--accent)',
+                        cursor: 'pointer', padding: '0 10px',
+                      }}
+                    >
+                      + Day
+                    </button>
+                    <button
+                      onClick={() => clearDay(activeDay)}
+                      style={{
+                        background: 'none', border: 'none',
+                        fontSize: 11, color: 'var(--text3)',
+                        cursor: 'pointer', padding: '0 12px',
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.color = 'var(--danger)'}
+                      onMouseLeave={e => e.currentTarget.style.color = 'var(--text3)'}
+                    >
+                      Clear
+                    </button>
+                  </div>
                 </div>
                 {/* Pattern picker for active day */}
                 <PatternPicker
