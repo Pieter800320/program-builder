@@ -63,14 +63,26 @@ export default function ExportButton({ client, program, week, progressionWeeks, 
           onClick={handleExport}
           disabled={loading || !program || !client}
         >
-          {loading ? 'Creating…' : docUrl ? '✓ Created' : 'Create'}
+          {loading ? 'Creating…' : 'Create'}
         </button>
         {docUrl && (
-          <a href={docUrl} target="_blank" rel="noreferrer"
-            className="nav-btn" style={{ color: 'var(--success)', textDecoration: 'none' }}>
-            ↗
-          </a>
+          <>
+            <span className="nav-divider">|</span>
+            <a href={docUrl} target="_blank" rel="noreferrer"
+              className="nav-btn" style={{ color: 'var(--success)', textDecoration: 'none' }}>
+              Open doc
+            </a>
+            <span className="nav-divider">|</span>
+            <button
+              className="nav-btn"
+              onClick={() => { navigator.clipboard.writeText(docUrl); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
+              style={{ color: copied ? 'var(--success)' : 'var(--accent)' }}
+            >
+              {copied ? '✓ Copied!' : 'Copy link'}
+            </button>
+          </>
         )}
+        {error && <span style={{ fontSize: 11, color: 'var(--danger)' }}>{error}</span>}
       </>
     )
   }

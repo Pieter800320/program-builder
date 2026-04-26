@@ -280,15 +280,6 @@ export default function App() {
               className="nav-btn"
               onClick={handleSmartFillAll}
               disabled={smartFillLoading}
-              title="Fill all days"
-            >
-              {smartFillLoading ? '' : 'Fill All'}
-            </button>
-            <span className="nav-divider">|</span>
-            <button
-              className="nav-btn"
-              onClick={handleSmartFill}
-              disabled={smartFillLoading}
               style={{
                 color: smartFillLoading ? '#fff' : undefined,
                 background: smartFillLoading ? 'var(--accent)' : 'transparent',

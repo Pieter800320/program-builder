@@ -195,7 +195,7 @@ export default function ClientProfileCard({ client, onChange }) {
                 fontSize: 12,
               }}>
                 <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 3 }}>
-                  {new Date(note.timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {note.timestamp ? note.timestamp.toString().slice(0, 24) : ''}
                 </div>
                 {note.text}
               </div>
