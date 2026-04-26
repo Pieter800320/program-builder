@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
 export default function ClientProfileCard({ client, onChange }) {
-  const [expanded, setExpanded] = useState(true)
-
   if (!client) return null
 
   function updateField(field, value) {
@@ -36,37 +34,7 @@ export default function ClientProfileCard({ client, onChange }) {
   ]
 
   return (
-    <div style={{
-      background: 'var(--bg2)',
-      border: '1px solid var(--border)',
-      borderRadius: 10,
-      marginBottom: 16,
-      overflow: 'hidden',
-    }}>
-      {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          padding: '12px 16px',
-          cursor: 'pointer',
-          borderBottom: expanded ? '1px solid var(--border)' : 'none',
-        }}
-        onClick={() => setExpanded(e => !e)}
-      >
-        <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>
-          {client.name}
-        </span>
-        <span style={{ fontSize: 11, color: 'var(--text3)', marginLeft: 10 }}>
-          Client Profile
-        </span>
-        <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text3)' }}>
-          {expanded ? '▲ collapse' : '▼ expand'}
-        </span>
-      </div>
-
-      {expanded && (
-        <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
           {/* Row 1: Name / Age / Sex / Experience */}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -211,8 +179,6 @@ export default function ClientProfileCard({ client, onChange }) {
             />
           </div>
 
-        </div>
-      )}
     </div>
   )
 }

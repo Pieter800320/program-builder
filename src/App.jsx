@@ -122,6 +122,14 @@ export default function App() {
     setProgram(prev => { const next = [...prev]; next[dayIndex] = updated; return next })
   }
 
+  function updateDayTitle(dayIndex, title) {
+    setProgram(prev => {
+      const next = [...prev]
+      next[dayIndex] = { ...next[dayIndex], title }
+      return next
+    })
+  }
+
   const handleGenerateNotes = useCallback(
     async (exerciseName, phase) => {
       if (!client) return ''
@@ -209,21 +217,18 @@ export default function App() {
           <h1>Program Builder</h1>
           {savedIndicator && <span style={{ fontSize: 10, color: 'var(--success)', marginLeft: 8 }}>✓ saved</span>}
         </div>
-        <nav className="app-header-nav">
-          {program && (
-            <>
-              <button className="nav-btn" onClick={handleSmartFill} disabled={aiLoading}>
-                {aiLoading ? <span className="loader" style={{ width: 10, height: 10 }} /> : 'Smart Fill'}
-              </button>
-              <span className="nav-divider">|</span>
-              <button className="nav-btn" onClick={handleQualityCheck} disabled={aiLoading}>Quality Check</button>
-              <span className="nav-divider">|</span>
-              <span className="nav-btn-wrap">
-                <ExportButton client={editableClient || client} program={program} progressionWeeks={progressionWeeks} navMode={true} />
-              </span>
-              <span className="nav-divider">|</span>
-            </>
-          )}
+        {program && (
+          <nav className="app-header-nav">
+            <button className="nav-btn" onClick={handleSmartFill} disabled={aiLoading}>
+              {aiLoading ? <span className="loader" style={{ width: 10, height: 10 }} /> : 'Smart Fill'}
+            </button>
+            <span className="nav-divider">|</span>
+            <button className="nav-btn" onClick={handleQualityCheck} disabled={aiLoading}>Quality Check</button>
+            <span className="nav-divider">|</span>
+            <ExportButton client={editableClient || client} program={program} progressionWeeks={progressionWeeks} navMode={true} />
+          </nav>
+        )}
+        <nav className="app-header-nav app-header-nav-secondary">
           <button className="nav-btn" onClick={() => setShowAddExercise(true)}>+ Exercise</button>
           <span className="nav-divider">|</span>
           <button className="nav-btn" onClick={() => setShowSettings(true)}>Settings</button>
@@ -302,9 +307,20 @@ export default function App() {
               >
                 <div className="day-tabs-bar" style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
                   {program.map((day, i) => (
-                    <button key={i} className={`day-tab ${activeDay === i ? 'active' : ''}`} onClick={() => setActiveDay(i)}>
-                      {day.label}
-                    </button>
+                    <div key={i} className={`day-tab-wrap ${activeDay === i ? 'active' : ''}`} onClick={() => setActiveDay(i)}>
+                      <span className="day-tab-label">{day.label}</span>
+                      {activeDay === i ? (
+                        <input
+                          className="day-tab-input"
+                          value={day.title || ''}
+                          onChange={e => updateDayTitle(i, e.target.value)}
+                          onClick={e => e.stopPropagation()}
+                          placeholder="Day title…"
+                        />
+                      ) : (
+                        <span className="day-tab-title">{day.title}</span>
+                      )}
+                    </div>
                   ))}
                 </div>
                 <div className="day-content">
