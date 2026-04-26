@@ -152,6 +152,12 @@ export default function App() {
     setActiveDay(program.length)
   }
 
+  function removeDay() {
+    if (program.length <= 1) return
+    setProgram(prev => prev.filter((_, i) => i !== activeDay))
+    setActiveDay(prev => Math.min(prev, program.length - 2))
+  }
+
   function clearDay(dayIndex) {
     setProgram(prev => {
       const next = [...prev]
@@ -423,29 +429,31 @@ export default function App() {
                       {day.label}
                     </button>
                   ))}
-                  <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+                  <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                     <button
                       onClick={addDay}
+                      title="Add day"
                       style={{
                         background: 'none', border: 'none',
-                        fontSize: 11, color: 'var(--accent)',
+                        fontSize: 18, color: 'var(--accent)',
                         cursor: 'pointer', padding: '0 10px',
+                        lineHeight: 1,
                       }}
-                    >
-                      + Day
-                    </button>
+                    >+</button>
                     <button
-                      onClick={() => clearDay(activeDay)}
+                      onClick={removeDay}
+                      title="Remove active day"
+                      disabled={program.length <= 1}
                       style={{
                         background: 'none', border: 'none',
-                        fontSize: 11, color: 'var(--text3)',
-                        cursor: 'pointer', padding: '0 12px',
+                        fontSize: 18, color: program.length <= 1 ? 'var(--border)' : 'var(--text3)',
+                        cursor: program.length <= 1 ? 'not-allowed' : 'pointer',
+                        padding: '0 10px',
+                        lineHeight: 1,
                       }}
-                      onMouseEnter={e => e.currentTarget.style.color = 'var(--danger)'}
-                      onMouseLeave={e => e.currentTarget.style.color = 'var(--text3)'}
-                    >
-                      Clear
-                    </button>
+                      onMouseEnter={e => { if (program.length > 1) e.currentTarget.style.color = 'var(--danger)' }}
+                      onMouseLeave={e => { if (program.length > 1) e.currentTarget.style.color = 'var(--text3)' }}
+                    >−</button>
                   </div>
                 </div>
                 {/* Pattern picker for active day */}
