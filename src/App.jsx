@@ -67,6 +67,7 @@ export default function App() {
   function handleGenerate(clientOverride) {
     const c = clientOverride || client
     if (!c) return
+    if (!editableClient) setEditableClient(c)
     const saved = loadProgram(c.name)
     if (saved) {
       const restore = window.confirm(`Saved program found for ${c.name}. Restore it?`)
