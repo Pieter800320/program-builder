@@ -52,6 +52,7 @@ export default function App() {
   useEffect(() => {
     if (client) setEditableClient(c => c?.name === client.name ? c : client)
   }, [client])
+  const [profileOpen, setProfileOpen] = useState(true)
   const [progressionOpen, setProgressionOpen] = useState(false)
   const [sessionOpen, setSessionOpen] = useState(true)
   const latestClientRef = useRef(null)
@@ -204,23 +205,27 @@ export default function App() {
     <div id="root">
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <header className="app-header">
-        <h1>Program Builder</h1>
-        {program && <span className="header-divider" />}
-        {program && (
-          <>
-            <button className="btn btn-ghost btn-sm" onClick={handleSmartFill} disabled={aiLoading} title="AI fills all exercises">
-              {aiLoading ? <span className="loader" /> : 'Smart fill'}
-            </button>
-            <button className="btn btn-ghost btn-sm" onClick={handleQualityCheck} disabled={aiLoading}>
-              {aiLoading ? <span className="loader" /> : 'Quality check'}
-            </button>
-            <ExportButton client={client} program={program} progressionWeeks={progressionWeeks} />
-          </>
-        )}
-        <div className="spacer" />
-        {savedIndicator && <span style={{ fontSize: 11, color: 'var(--success)' }}>Saved</span>}
-        <button className="btn btn-ghost btn-sm" onClick={() => setShowAddExercise(true)}>+ Exercise</button>
-        <button className="btn btn-ghost btn-sm" onClick={() => setShowSettings(true)}>Settings</button>
+        <div className="app-header-title">
+          <h1>Program Builder</h1>
+          {savedIndicator && <span style={{ fontSize: 10, color: 'var(--success)', marginLeft: 8 }}>✓ saved</span>}
+        </div>
+        <nav className="app-header-nav">
+          {program && (
+            <>
+              <button className="nav-btn" onClick={handleSmartFill} disabled={aiLoading}>
+                {aiLoading ? <span className="loader" style={{ width: 10, height: 10 }} /> : 'Smart Fill'}
+              </button>
+              <span className="nav-divider">|</span>
+              <button className="nav-btn" onClick={handleQualityCheck} disabled={aiLoading}>Quality Check</button>
+              <span className="nav-divider">|</span>
+              <ExportButton client={editableClient || client} program={program} progressionWeeks={progressionWeeks} />
+              <span className="nav-divider">|</span>
+            </>
+          )}
+          <button className="nav-btn" onClick={() => setShowAddExercise(true)}>+ Exercise</button>
+          <span className="nav-divider">|</span>
+          <button className="nav-btn" onClick={() => setShowSettings(true)}>Settings</button>
+        </nav>
       </header>
 
       {/* ── Mobile client bar ─────────────────────────────────────────────── */}
@@ -259,26 +264,22 @@ export default function App() {
                 </div>
               )}
 
-              {/* Client profile card */}
-              {(editableClient || client) && (
-                <div style={{ padding: '16px 16px 0' }}>
+              {/* 1. Client Profile — collapsible */}
+              <CollapsibleSection
+                label="Client Profile"
+                summary={(editableClient || client)?.name || ''}
+                open={profileOpen}
+                onToggle={() => setProfileOpen(o => !o)}
+              >
+                <div style={{ padding: '0 16px 16px' }}>
                   <ClientProfileCard
                     client={editableClient || client}
                     onChange={c => setEditableClient(c)}
                   />
                 </div>
-              )}
+              </CollapsibleSection>
 
-              {/* Day tabs */}
-              <div className="day-tabs-bar">
-                {program.map((day, i) => (
-                  <button key={i} className={`day-tab ${activeDay === i ? 'active' : ''}`} onClick={() => setActiveDay(i)}>
-                    {day.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Progression plan — collapsible */}
+              {/* 2. Progression Plan — collapsible */}
               <CollapsibleSection
                 label="Progression Plan"
                 summary={progressionWeeks.map(w => w.label).join(' · ')}
@@ -290,13 +291,20 @@ export default function App() {
                 </div>
               </CollapsibleSection>
 
-              {/* Session phases — collapsible */}
+              {/* 3. Session — collapsible with day tabs inside */}
               <CollapsibleSection
-                label={program[activeDay]?.title || `Day ${activeDay + 1}`}
-                summary={null}
+                label="Session"
+                summary={program[activeDay]?.title || 'Day ' + (activeDay + 1)}
                 open={sessionOpen}
                 onToggle={() => setSessionOpen(o => !o)}
               >
+                <div className="day-tabs-bar" style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
+                  {program.map((day, i) => (
+                    <button key={i} className={`day-tab ${activeDay === i ? 'active' : ''}`} onClick={() => setActiveDay(i)}>
+                      {day.label}
+                    </button>
+                  ))}
+                </div>
                 <div className="day-content">
                   <DayBlock
                     day={program[activeDay]}
@@ -370,7 +378,6 @@ function CollapsibleSection({ label, summary, open, onToggle, children }) {
 function MobileClientBar({ clients, selectedClient, onSelect, onGenerate, onDelete }) {
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
-  const [expanded, setExpanded] = useState(false)
 
   const filtered = search.trim()
     ? clients.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
@@ -430,46 +437,7 @@ function MobileClientBar({ clients, selectedClient, onSelect, onGenerate, onDele
         </button>
       </div>
 
-      {/* Client profile — collapsible */}
-      {selectedClient && (
-        <div>
-          <div
-            onClick={() => setExpanded(o => !o)}
-            style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', borderTop: '1px solid var(--border)' }}
-          >
-            <span style={{ fontWeight: 600, fontSize: 13 }}>{selectedClient.name}</span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, flex: 1 }}>
-              {selectedClient.age && <span className="tag">{selectedClient.age}y</span>}
-              {selectedClient.experience && <span className="tag">{selectedClient.experience}</span>}
-              {(selectedClient.goals || []).slice(0, 2).map(g => <span key={g} className="tag goal">{g}</span>)}
-              {(selectedClient.injuries || []).filter(Boolean).slice(0, 2).map(i => <span key={i} className="tag injury">{i}</span>)}
-            </div>
-            <span style={{ fontSize: 10, color: 'var(--text3)', flexShrink: 0 }}>{expanded ? '▲' : '▼'}</span>
-          </div>
 
-          {expanded && (
-            <div style={{ padding: '0 12px 12px', background: 'var(--bg)' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 12px', marginBottom: 8 }}>
-                {selectedClient.session_duration && (
-                  <div style={{ fontSize: 12, color: 'var(--text2)' }}>Session: <strong>{selectedClient.session_duration} min</strong></div>
-                )}
-                {selectedClient.sessions_per_week && (
-                  <div style={{ fontSize: 12, color: 'var(--text2)' }}>Sessions/wk: <strong>{selectedClient.sessions_per_week}</strong></div>
-                )}
-                {selectedClient.fitness_level && (
-                  <div style={{ fontSize: 12, color: 'var(--text2)' }}>Fitness: <strong>{selectedClient.fitness_level}</strong></div>
-                )}
-              </div>
-              {selectedClient.specific_goals && (
-                <p style={{ fontSize: 12, color: 'var(--text3)', fontStyle: 'italic', marginBottom: 8 }}>{selectedClient.specific_goals}</p>
-              )}
-              {selectedClient.concerns && (
-                <p style={{ fontSize: 12, color: 'var(--text3)' }}>Concern: {selectedClient.concerns}</p>
-              )}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   )
 }

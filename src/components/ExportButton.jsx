@@ -4,7 +4,7 @@ function getGasUrl() {
   return localStorage.getItem('pb_gas_url') || ''
 }
 
-export default function ExportButton({ client, program, week, progressionWeeks }) {
+export default function ExportButton({ client, program, week, progressionWeeks, navMode }) {
   const [loading, setLoading] = useState(false)
   const [docUrl, setDocUrl] = useState(null)
   const [folderUrl, setFolderUrl] = useState(null)
@@ -54,6 +54,26 @@ export default function ExportButton({ client, program, week, progressionWeeks }
     }
   }
 
+  if (navMode) {
+    return (
+      <>
+        <button
+          className="nav-btn"
+          onClick={handleExport}
+          disabled={loading || !program || !client}
+        >
+          {loading ? 'Creating…' : docUrl ? '✓ Created' : 'Create'}
+        </button>
+        {docUrl && (
+          <a href={docUrl} target="_blank" rel="noreferrer"
+            className="nav-btn" style={{ color: 'var(--success)', textDecoration: 'none' }}>
+            ↗
+          </a>
+        )}
+      </>
+    )
+  }
+
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       <button
@@ -63,7 +83,6 @@ export default function ExportButton({ client, program, week, progressionWeeks }
       >
         {loading ? <><span className="loader" /> Creating doc…</> : '↗ Share to Google Docs'}
       </button>
-
       {docUrl && (
         <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
           <a href={docUrl} target="_blank" rel="noreferrer"
@@ -78,7 +97,6 @@ export default function ExportButton({ client, program, week, progressionWeeks }
           )}
         </div>
       )}
-
       {error && (
         <span className="text-sm" style={{ color: 'var(--danger)' }}>{error}</span>
       )}
