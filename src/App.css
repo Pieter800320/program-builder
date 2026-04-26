@@ -388,3 +388,13 @@ label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px
   width: 120px;
   outline: none;
 }
+
+/* ── AI loading state ────────────────────────────────────────────────────── */
+.nav-btn-loading {
+  color: var(--accent) !important;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

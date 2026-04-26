@@ -224,16 +224,26 @@ export default function App() {
         </div>
         {program && (
           <nav className="app-header-nav">
-            <button className="nav-btn" onClick={handleSmartFill} disabled={aiLoading}>
-              {aiLoading ? <span className="loader" style={{ width: 10, height: 10 }} /> : 'Smart Fill'}
+            <button
+              className={`nav-btn ${aiLoading ? 'nav-btn-loading' : ''}`}
+              onClick={handleSmartFill}
+              disabled={aiLoading}
+            >
+              {aiLoading ? '⟳ Thinking…' : 'Smart Fill'}
             </button>
-            {smartFillInfo && (
+            {smartFillInfo && !aiLoading && (
               <span style={{ fontSize: 10, color: 'var(--text3)', whiteSpace: 'nowrap' }}>
                 {smartFillInfo.dayType} · {smartFillInfo.archetype}
               </span>
             )}
             <span className="nav-divider">|</span>
-            <button className="nav-btn" onClick={handleQualityCheck} disabled={aiLoading}>Quality Check</button>
+            <button
+              className={`nav-btn ${aiLoading ? 'nav-btn-loading' : ''}`}
+              onClick={handleQualityCheck}
+              disabled={aiLoading}
+            >
+              {aiLoading ? '⟳ Thinking…' : 'Quality Check'}
+            </button>
             <span className="nav-divider">|</span>
             <ExportButton client={editableClient || client} program={program} progressionWeeks={progressionWeeks} navMode={true} />
           </nav>
@@ -275,6 +285,23 @@ export default function App() {
             </div>
           ) : (
             <div className="main-scroll">
+              {aiLoading && (
+                <div style={{
+                  background: 'rgba(79,124,255,.08)',
+                  border: '1px solid rgba(79,124,255,.3)',
+                  borderRadius: 6,
+                  margin: '8px 16px',
+                  padding: '10px 14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  fontSize: 13,
+                  color: 'var(--accent)',
+                }}>
+                  <span className="loader" />
+                  AI is thinking — this may take 10-20 seconds…
+                </div>
+              )}
               {aiError && (
                 <div className="badge badge-warning" style={{ display: 'block', margin: '8px 16px', padding: '6px 10px', borderRadius: 6 }}>
                   AI: {aiError}

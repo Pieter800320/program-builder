@@ -141,9 +141,6 @@ export default function PhaseSection({
       <div className="phase-header" onClick={() => setOpen(o => !o)}>
         <div className="phase-dot" style={{ background: color }} />
         <span className="phase-label" style={{ color }}>{label}</span>
-        {edu?.duration && (
-          <span className="phase-meta" style={{ fontSize: 10 }}>{edu.duration}</span>
-        )}
         {filledCount > 0 && (
           <span className="badge badge-success" style={{ marginLeft: 8 }}>{filledCount}</span>
         )}
@@ -164,8 +161,13 @@ export default function PhaseSection({
           borderBottom: '1px solid var(--border)',
           padding: '14px 16px',
         }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '.06em' }}>
-            {label} — Rusin Guide
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color, textTransform: 'uppercase', letterSpacing: '.06em' }}>
+              {label} — Rusin Guide
+            </span>
+            {edu?.duration && (
+              <span style={{ fontSize: 11, color: 'var(--text3)' }}>{edu.duration}</span>
+            )}
           </div>
           <pre style={{
             fontSize: 12,

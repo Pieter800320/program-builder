@@ -214,41 +214,50 @@ export default function ExerciseRow({
         )}
 
         {/* Exercise name — tap to open picker */}
-        <button
-          onClick={() => setShowPicker(true)}
-          style={{
-            flex: 1,
-            background: 'var(--bg3)',
-            border: '1px solid var(--border)',
-            borderRadius: 6,
-            padding: '8px 32px 8px 10px',
-            textAlign: 'left',
-            color: exercise.exerciseName ? 'var(--text)' : 'var(--text3)',
-            fontSize: 13,
-            cursor: 'pointer',
-            position: 'relative',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            transition: 'border-color .15s',
-            fontFamily: 'inherit',
-          }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border2)'}
-          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-        >
-          {exercise.exerciseName || 'tap to select exercise…'}
-          {exercise.exerciseName && (
-            <span
-              onClick={handleClear}
-              style={{
-                position: 'absolute', right: 8, top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'var(--text3)', fontSize: 16,
-                lineHeight: 1,
-              }}
-            >×</span>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <button
+            onClick={() => setShowPicker(true)}
+            style={{
+              width: '100%',
+              background: 'var(--bg3)',
+              border: '1px solid var(--border)',
+              borderRadius: 6,
+              padding: '8px 32px 8px 10px',
+              textAlign: 'left',
+              color: exercise.exerciseName ? 'var(--text)' : 'var(--text3)',
+              fontSize: 13,
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              transition: 'border-color .15s',
+              fontFamily: 'inherit',
+            }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border2)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+          >
+            {exercise.exerciseName || 'tap to select exercise…'}
+            {exercise.exerciseName && (
+              <span
+                onClick={handleClear}
+                style={{
+                  position: 'absolute', right: 8, top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: 'var(--text3)', fontSize: 16,
+                  lineHeight: 1,
+                }}
+              >×</span>
+            )}
+          </button>
+          {exercise.exerciseName && !allExercises.some(
+            ex => ex.name.toLowerCase() === exercise.exerciseName.toLowerCase()
+          ) && (
+            <span style={{ fontSize: 10, color: 'var(--warning)', paddingLeft: 4 }}>
+              ⚠ not in database — consider adding via + Exercise
+            </span>
           )}
-        </button>
+        </div>
 
         {/* Sets + Reps */}
         <div className="exercise-row-meta">
