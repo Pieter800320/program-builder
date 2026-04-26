@@ -218,7 +218,9 @@ export default function App() {
               <span className="nav-divider">|</span>
               <button className="nav-btn" onClick={handleQualityCheck} disabled={aiLoading}>Quality Check</button>
               <span className="nav-divider">|</span>
-              <ExportButton client={editableClient || client} program={program} progressionWeeks={progressionWeeks} />
+              <span className="nav-btn-wrap">
+                <ExportButton client={editableClient || client} program={program} progressionWeeks={progressionWeeks} navMode={true} />
+              </span>
               <span className="nav-divider">|</span>
             </>
           )}
