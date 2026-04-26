@@ -46,6 +46,7 @@ export default function App() {
   const [allExercises, setAllExercises] = useState(loadAllExercises)
   const [savedIndicator, setSavedIndicator] = useState(false)
   const [smartFillInfo, setSmartFillInfo] = useState(null)
+  const [smartFillLoading, setSmartFillLoading] = useState(false)
   const [progressionWeeks, setProgressionWeeks] = useState(DEFAULT_WEEKS)
   const [editableClient, setEditableClient] = useState(null)
 
@@ -161,7 +162,7 @@ export default function App() {
 
   async function handleSmartFill() {
     if (!program || !client) return
-
+    setSmartFillLoading(true)
     const result = await smartFill(program, client, allExercises, activeDay)
     if (!result || !result.phases) return
 
@@ -202,8 +203,9 @@ export default function App() {
       return next
     })
 
+    setSmartFillLoading(false)
     // Store detection info for display
-    if (result.archetype || result.dayType) {
+    if (result && (result.archetype || result.dayType)) {
       setSmartFillInfo({ archetype: result.archetype, dayType: result.dayType })
       setTimeout(() => setSmartFillInfo(null), 5000)
     }
@@ -241,15 +243,16 @@ export default function App() {
             <button
               className="nav-btn"
               onClick={handleSmartFill}
-              disabled={aiLoading}
-              style={aiLoading ? {
-                color: '#fff',
-                background: 'var(--accent)',
-                borderRadius: 4,
-                padding: '2px 8px',
-              } : {}}
+              disabled={smartFillLoading}
+              style={{
+                color: smartFillLoading ? '#fff' : undefined,
+                background: smartFillLoading ? 'var(--accent)' : 'transparent',
+                borderRadius: smartFillLoading ? 4 : 0,
+                padding: smartFillLoading ? '2px 10px' : undefined,
+                transition: 'all .2s',
+              }}
             >
-              {aiLoading ? '⟳ Filling…' : 'Smart Fill'}
+              {smartFillLoading ? '⟳ Filling…' : 'Smart Fill'}
             </button>
             {smartFillInfo && !aiLoading && (
               <span style={{ fontSize: 10, color: 'var(--text3)', whiteSpace: 'nowrap' }}>
@@ -301,7 +304,7 @@ export default function App() {
             </div>
           ) : (
             <div className="main-scroll">
-              {aiLoading && (
+              {smartFillLoading && (
                 <div style={{
                   background: 'rgba(79,124,255,.08)',
                   border: '1px solid rgba(79,124,255,.3)',
@@ -315,7 +318,7 @@ export default function App() {
                   color: 'var(--accent)',
                 }}>
                   <span className="loader" />
-                  AI is thinking — this may take 10-20 seconds…
+                  Smart Fill is thinking — this may take 10–20 seconds…
                 </div>
               )}
               {aiError && (
