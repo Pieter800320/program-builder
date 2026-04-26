@@ -6,6 +6,7 @@ import SettingsModal from './components/SettingsModal'
 import ExportButton from './components/ExportButton'
 import AddExerciseModal from './components/AddExerciseModal'
 import ProgressionTable, { DEFAULT_WEEKS } from './components/ProgressionTable'
+import ClientProfileCard from './components/ClientProfileCard'
 import { generateSplit, makeEmptyExercise, PHASE_DEFAULTS } from './logic/split'
 import { filterExercises } from './logic/filter.js'
 import { useAI } from './hooks/useAI'
@@ -45,6 +46,7 @@ export default function App() {
   const [allExercises, setAllExercises] = useState(loadAllExercises)
   const [savedIndicator, setSavedIndicator] = useState(false)
   const [progressionWeeks, setProgressionWeeks] = useState(DEFAULT_WEEKS)
+  const [editableClient, setEditableClient] = useState(null)
   const [progressionOpen, setProgressionOpen] = useState(false)
   const [sessionOpen, setSessionOpen] = useState(true)
   const latestClientRef = useRef(null)
