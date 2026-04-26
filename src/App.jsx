@@ -160,6 +160,42 @@ export default function App() {
     setQualityReport(report)
   }
 
+  async function handleSmartFillAll() {
+    if (!program || !client) return
+    setSmartFillLoading(true)
+    for (let i = 0; i < program.length; i++) {
+      const result = await smartFill(program, client, allExercises, i)
+      if (!result || !result.phases) continue
+      setProgram(prev => {
+        const next = [...prev]
+        const day = { ...next[i] }
+        if (result.suggestedPatterns && result.suggestedPatterns.length > 0) {
+          day.patterns = result.suggestedPatterns
+          day.title = result.suggestedPatterns.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' + ')
+        }
+        day.phases = day.phases.map(ph => {
+          const aiExercises = result.phases[ph.phase]
+          if (!aiExercises || aiExercises.length === 0) return ph
+          return { ...ph, exercises: aiExercises.map(ex => ({
+            id: crypto.randomUUID(),
+            exerciseName: ex.exerciseName || '',
+            sets: ex.sets || PHASE_DEFAULTS[ph.phase]?.sets || '',
+            reps: ex.reps || PHASE_DEFAULTS[ph.phase]?.reps || '',
+            notes: ex.notes || '',
+            showNotes: !!(ex.notes),
+            supersetGroup: ex.supersetGroup || null,
+            aiGenerated: true,
+          }))}
+        })
+        next[i] = day
+        return next
+      })
+    }
+    setSmartFillLoading(false)
+    setSmartFillInfo({ archetype: 'All days filled' })
+    setTimeout(() => setSmartFillInfo(null), 4000)
+  }
+
   async function handleSmartFill() {
     if (!program || !client) return
     setSmartFillLoading(true)
@@ -240,6 +276,15 @@ export default function App() {
         </div>
         {program && (
           <nav className="app-header-nav">
+            <button
+              className="nav-btn"
+              onClick={handleSmartFillAll}
+              disabled={smartFillLoading}
+              title="Fill all days"
+            >
+              {smartFillLoading ? '' : 'Fill All'}
+            </button>
+            <span className="nav-divider">|</span>
             <button
               className="nav-btn"
               onClick={handleSmartFill}

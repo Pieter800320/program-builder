@@ -8,6 +8,7 @@ export default function ExportButton({ client, program, week, progressionWeeks, 
   const [loading, setLoading] = useState(false)
   const [docUrl, setDocUrl] = useState(null)
   const [folderUrl, setFolderUrl] = useState(null)
+  const [copied, setCopied] = useState(false)
   const [error, setError] = useState(null)
 
   async function handleExport() {
@@ -42,7 +43,7 @@ export default function ExportButton({ client, program, week, progressionWeeks, 
       if (data.ok && data.url) {
         setDocUrl(data.url)
         setFolderUrl(data.folderUrl || null)
-        // Open the doc immediately
+        // Open doc for review first — don't auto-open share dialog
         window.open(data.url, '_blank')
       } else {
         setError(data.error || 'Failed to create document.')
@@ -84,15 +85,22 @@ export default function ExportButton({ client, program, week, progressionWeeks, 
         {loading ? <><span className="loader" /> Creating doc…</> : '↗ Share to Google Docs'}
       </button>
       {docUrl && (
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
           <a href={docUrl} target="_blank" rel="noreferrer"
             className="btn btn-ghost btn-sm" style={{ color: 'var(--success)' }}>
             ✓ Open doc
           </a>
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => { navigator.clipboard.writeText(docUrl); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
+            style={{ color: copied ? 'var(--success)' : 'var(--accent)' }}
+          >
+            {copied ? '✓ Copied!' : '⎘ Copy link'}
+          </button>
           {folderUrl && (
             <a href={folderUrl} target="_blank" rel="noreferrer"
               className="btn btn-ghost btn-sm" style={{ color: 'var(--text3)' }}>
-              📁 Clients folder
+              📁 Folder
             </a>
           )}
         </div>

@@ -15590,5 +15590,425 @@
       "suitcase_carry_single_arm"
     ],
     "progression": []
+  },
+  {
+    "name": "Push-Up (Primer)",
+    "patterns": [
+      "push"
+    ],
+    "phases": [
+      "primer",
+      "warmup"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "wrist_pain"
+    ],
+    "goals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "tags": [
+      "chest",
+      "shoulders",
+      "triceps"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Band Pull-Apart (Primer)",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "primer",
+      "activation"
+    ],
+    "equipment": [
+      "band"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "health",
+      "stability"
+    ],
+    "tags": [
+      "upper_back",
+      "rear_delts",
+      "shoulder_health"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Plank (Primer)",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "primer",
+      "activation"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "wrist_pain"
+    ],
+    "goals": [
+      "stability",
+      "health"
+    ],
+    "tags": [
+      "core"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Box Jump (Primer)",
+    "patterns": [
+      "explosive",
+      "squat"
+    ],
+    "phases": [
+      "primer"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain",
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Med Ball Chest Pass",
+    "patterns": [
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "primer"
+    ],
+    "equipment": [
+      "medicine_ball"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "chest",
+      "shoulders",
+      "triceps"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Med Ball Slam",
+    "patterns": [
+      "explosive",
+      "hinge"
+    ],
+    "phases": [
+      "primer",
+      "finisher"
+    ],
+    "equipment": [
+      "medicine_ball"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "moderate",
+    "joint_stress": [
+      "spine_load"
+    ],
+    "contraindications": [
+      "low_back_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "conditioning"
+    ],
+    "tags": [
+      "full_body",
+      "core"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Vertical Jump",
+    "patterns": [
+      "explosive",
+      "squat"
+    ],
+    "phases": [
+      "primer"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "knee_load"
+    ],
+    "contraindications": [
+      "knee_pain"
+    ],
+    "goals": [
+      "explosive_power"
+    ],
+    "tags": [
+      "quads",
+      "glutes",
+      "full_body"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Explosive Push-Up",
+    "patterns": [
+      "push",
+      "explosive"
+    ],
+    "phases": [
+      "primer"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "intensity": [
+      "moderate"
+    ],
+    "skill_level": [
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_load",
+      "wrist_load"
+    ],
+    "contraindications": [
+      "shoulder_pain",
+      "wrist_pain"
+    ],
+    "goals": [
+      "explosive_power",
+      "strength"
+    ],
+    "tags": [
+      "chest",
+      "shoulders",
+      "triceps"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Band Lat Pulldown (Primer)",
+    "patterns": [
+      "pull"
+    ],
+    "phases": [
+      "primer",
+      "activation"
+    ],
+    "equipment": [
+      "band"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "shoulder_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "strength",
+      "stability"
+    ],
+    "tags": [
+      "lats",
+      "upper_back"
+    ],
+    "unilateral": false,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Dead Bug (Primer)",
+    "patterns": [
+      "core"
+    ],
+    "phases": [
+      "primer",
+      "activation"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "stability",
+      "health"
+    ],
+    "tags": [
+      "core"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": []
+  },
+  {
+    "name": "Pallof Press (Banded)",
+    "patterns": [
+      "core",
+      "rotation"
+    ],
+    "phases": [
+      "primer",
+      "activation"
+    ],
+    "equipment": [
+      "band"
+    ],
+    "intensity": [
+      "low"
+    ],
+    "skill_level": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "spine_load": "low",
+    "joint_stress": [
+      "spine_friendly"
+    ],
+    "contraindications": [],
+    "goals": [
+      "stability",
+      "strength"
+    ],
+    "tags": [
+      "core"
+    ],
+    "unilateral": true,
+    "regression": [],
+    "progression": []
   }
 ]

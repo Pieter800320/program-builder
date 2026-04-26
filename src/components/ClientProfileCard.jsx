@@ -179,6 +179,31 @@ export default function ClientProfileCard({ client, onChange }) {
             />
           </div>
 
+      {/* Session notes */}
+      {(client.session_notes || []).length > 0 && (
+        <div>
+          <label style={{ fontSize: 11, color: 'var(--text3)', display: 'block', marginBottom: 6, marginTop: 4 }}>
+            Session notes
+          </label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {[...(client.session_notes || [])].reverse().slice(0, 5).map((note, i) => (
+              <div key={i} style={{
+                background: 'var(--bg3)',
+                border: '1px solid var(--border)',
+                borderRadius: 6,
+                padding: '8px 10px',
+                fontSize: 12,
+              }}>
+                <div style={{ fontSize: 10, color: 'var(--text3)', marginBottom: 3 }}>
+                  {new Date(note.timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                </div>
+                {note.text}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
